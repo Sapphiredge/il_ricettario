@@ -9,7 +9,7 @@ const MAX_CHARS_PASSAGGIO = 500;
 /**
  * Classe condivisa per la creazione e modifica delle ricette.
  */
-class RicettaCreazioneModifica {
+class GestioneRicettaCeM {
     constructor() {
         this.listaIngredienti = document.getElementById('ingredients-list');
         this.listaIstruzioni = document.getElementById('instructions-list');
@@ -190,7 +190,7 @@ class RicettaCreazioneModifica {
 // Funzione di inizializzazione per il Form Ricetta (Crea/Modifica).
 function initRecipeForm() {
     if (document.getElementById('ingredients-list')) {
-        new RicettaCE();
+        new RicettaCreazioneModifica();
     }
 }
 

@@ -15,15 +15,15 @@ class FiltriAvanzati {
     // Inizializza i listener degli eventi.
     init() {
         this.pillsCategoria.forEach(pill => {
-            pill.addEventListener('click', (e) => this.handlePillClick(e, pill));
+            pill.addEventListener('click', (e) => this.handlerClickPillola(e, pill));
         });
 
         this.labelAllergeni.forEach(label => {
-            label.addEventListener('click', (e) => this.handleAllergenClick(e, label));
+            label.addEventListener('click', (e) => this.handlerClickAllergene(e, label));
         });
 
         if (this.formFiltri) {
-            this.formFiltri.addEventListener('submit', (e) => this.handleSubmit(e));
+            this.formFiltri.addEventListener('submit', (e) => this.handlerInvioFormRicerca(e));
         }
     }
 
