@@ -1,6 +1,8 @@
 'use strict';
 
-
+/**
+ * Gestione della pagina di una raccoolta dell'utente 
+ */
 class GestioneDettagliRaccolta {
     constructor() {
         this.btnElimina = document.getElementById('btn-elimina-raccolta');
@@ -9,6 +11,7 @@ class GestioneDettagliRaccolta {
         this.init();
     }
 
+    // Inizializzazione dei listener degli eventi.
     init() {
         if (this.btnElimina) {
             this.btnElimina.addEventListener('click', () => this.eliminaRaccolta());
@@ -19,6 +22,7 @@ class GestioneDettagliRaccolta {
         });
     }
 
+    // Funzione per eliminare una raccolta
     async eliminaRaccolta() {
         const id = this.btnElimina.dataset.id;
         const name = this.btnElimina.dataset.name;
@@ -39,6 +43,7 @@ class GestioneDettagliRaccolta {
         }
     }
 
+    // Funzione per rimuovere una ricetta da una raccolta
     async rimuoviRicetta(btn) {
         const collectionId = btn.dataset.collectionId;
         const recipeId = btn.dataset.recipeId;

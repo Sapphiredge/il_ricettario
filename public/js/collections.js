@@ -1,6 +1,9 @@
 'use strict';
 
 
+/**
+ * Classe per la gestione delle raccolte dell'utente (creazione ed eliminazione).
+ */
 class GestioneRaccolte {
     constructor() {
         this.btnNuova = document.getElementById('btn-nuova-raccolta');
@@ -17,6 +20,7 @@ class GestioneRaccolte {
         }
     }
 
+    // Inizializzazione dei listener degli eventi.
     init() {
         if (this.btnNuova) {
             this.btnNuova.addEventListener('click', () => this.apriModale());
@@ -33,12 +37,14 @@ class GestioneRaccolte {
         });
     }
 
+    // Apre il modale di creazione raccolta resettando il campo nome.
     apriModale() {
         if (this.inputNome) this.inputNome.value = '';
         if (this.errorEl) this.errorEl.classList.add('d-none');
         this.modal.show();
     }
 
+    // Invia la richiesta di creazione raccolta e reindirizza in caso di successo.
     async salvaRaccolta() {
         const name = this.inputNome.value.trim();
 
@@ -75,6 +81,7 @@ class GestioneRaccolte {
         }
     }
 
+    // Chiede conferma all'utente ed esegue la richiesta di eliminazione raccolta.
     async confermaEliminazione(btn) {
         const id = btn.dataset.id;
         const name = btn.dataset.name;
@@ -96,6 +103,7 @@ class GestioneRaccolte {
         }
     }
 
+    // Rimuove con animazione la card della raccolta eliminata dal DOM.
     rimuoviCardDallaUI(btn) {
         const colonna = btn.closest('.col');
         if (colonna) {

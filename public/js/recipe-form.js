@@ -1,15 +1,15 @@
 'use strict';
 
-
-// Limiti massimi
 const MAX_INGREDIENTI = 15;
 const MAX_PASSAGGI = 10;
 const MAX_CHARS_QUANTITA = 6;
 const MAX_CHARS_NOME_ING = 30;
 const MAX_CHARS_PASSAGGIO = 500;
 
-// Classe per la gestione della creazione e modifica delle ricette.
-class RicettaCE {
+/**
+ * Classe condivisa per la creazione e modifica delle ricette.
+ */
+class RicettaCreazioneModifica {
     constructor() {
         this.listaIngredienti = document.getElementById('ingredients-list');
         this.listaIstruzioni = document.getElementById('instructions-list');
@@ -23,6 +23,7 @@ class RicettaCE {
         this.init();
     }
 
+    // Inizializzazione listener eventi
     init() {
         if (this.btnAggiungiIngrediente) {
             this.btnAggiungiIngrediente.removeAttribute('onclick');

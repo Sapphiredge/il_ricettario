@@ -1,6 +1,8 @@
 'use strict';
 
-// classe per la gestione dello scorrimento (carousel) orizzontale.
+/**
+ * Classe per la gestione del carosello
+ */
 class Carosello {
     constructor(config) {
         this.container = config.container;
@@ -11,6 +13,7 @@ class Carosello {
         this.init();
     }
 
+    // Inizializzazione listener eventi
     init() {
         // Scorrimento verso sinistra
         this.btnSinistro.addEventListener('click', () => {
@@ -30,7 +33,7 @@ class Carosello {
     }
 }
 
-// Funzione di inizializzazione per il Carosello in Homepage.
+// Inizializzazione del carosello in homepage
 function initHomepage() {
     const container = document.getElementById('recent-recipes-container');
     const btnSinistro = document.getElementById('btn-scroll-left');
@@ -46,7 +49,6 @@ function initHomepage() {
     }
 }
 
-// Supporto per SPA: se il DOM è già pronto, inizializza subito.
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initHomepage);
 } else {

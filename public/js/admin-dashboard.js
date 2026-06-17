@@ -18,9 +18,7 @@ class Paginatore {
         this.init();
     }
 
-    /**
-     * Inizializza i listener degli eventi.
-     */
+    // Inizializzazione dei listener degli eventi.
     init() {
         this.inputRicerca.addEventListener('input', () => {
             this.paginaIniziale = 1;
@@ -50,27 +48,21 @@ class Paginatore {
         this.aggiornaTabella();
     }
 
-    /**
-     * Aggiorna la visibilità delle righe e l'interfaccia utente.
-     */
+    // Aggiornamento della visibilità delle righe e dell'interfaccia admin
     aggiornaTabella() {
         const stringRicerca = this.inputRicerca.value.toLowerCase();
 
-        // 1. Filtro
         const righeFiltrate = Array.from(this.righe).filter(riga => {
             return riga.textContent.toLowerCase().includes(stringRicerca);
         });
 
         const totalePagine = Math.ceil(righeFiltrate.length / this.oggettiPerPagina) || 1;
 
-        // 2. Sicurezza: mantieni la pagina entro i limiti
         if (this.paginaIniziale > totalePagine) this.paginaIniziale = totalePagine;
         if (this.paginaIniziale < 1) this.paginaIniziale = 1;
 
-        // 3. Nascondi tutte le righe
         this.righe.forEach(riga => riga.style.display = 'none');
 
-        // 4. Mostra pezzetto (slice) per la pagina attuale
         const inizio = (this.paginaIniziale - 1) * this.oggettiPerPagina;
         const fine = inizio + this.oggettiPerPagina;
 
@@ -78,7 +70,6 @@ class Paginatore {
             riga.style.display = '';
         });
 
-        // 5. Aggiorna interfaccia utente
         if (this.spanPaginaCorrente) this.spanPaginaCorrente.textContent = this.paginaIniziale;
         if (this.spanTotalePagine) this.spanTotalePagine.textContent = totalePagine;
 
@@ -90,9 +81,8 @@ class Paginatore {
             container.style.display = righeFiltrate.length === 0 ? 'none' : 'flex';
         }
 
-        // Ricalcola le posizioni degli elementi per AOS (Animazioni di scroll)
         if (typeof AOS !== 'undefined') {
-            setTimeout(() => AOS.refresh(), 50);
+            setTimeout(() => AOS.refresh(), 50); // ricalcolo delle animazioni
         }
     }
 }
@@ -106,7 +96,8 @@ class GestioneBan {
     }
 
     init() {
-        // Gestione ban ricette
+
+        // Gestione ban ricette e utenti
         document.addEventListener('submit', async (e) => {
             const form = e.target;
             if (form.classList.contains('admin-recipe-ban-form') || form.classList.contains('admin-user-ban-form')) {
@@ -169,7 +160,6 @@ class GestioneBan {
     }
 }
 
-// Funzione di inizializzazione per il Dashboard Admin.
 function initAdminDashboard() {
     new GestioneBan();
     // Configurazione Ricette
@@ -197,7 +187,6 @@ function initAdminDashboard() {
     if (utentiConfig.inputRicerca) new Paginatore(utentiConfig);
 }
 
-// Supporto per SPA: se il DOM è già pronto, inizializza subito.
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initAdminDashboard);
 } else {

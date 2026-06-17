@@ -81,6 +81,7 @@ function resetAnimazioniAOS(container) {
 }
 
 
+// Carica il contenuto della pagina via fetch e aggiorna il DOM senza ricaricare la pagina (SPA).
 async function caricaContenuto(url) {
     try {
         const response = await fetch(url);

@@ -1,7 +1,9 @@
 'use strict';
 
 
-// Gestione eliminazione ricette
+/**
+ * Classe per la gestione della dashboard dello chef (eliminazione e modifica ricette).
+ */
 class GestioneDashboard {
     constructor() {
         this.listaRicette = document.getElementById('recipes-grid');
@@ -10,12 +12,14 @@ class GestioneDashboard {
         this.init();
     }
 
+    // Inizializzazione dei listener degli eventi.
     init() {
         if (this.listaRicette) {
             this.listaRicette.addEventListener('click', (e) => this.handleAction(e));
         }
     }
 
+    // Gestisce il click sulla lista ricette distinguendo eliminazione e modifica.
     handleAction(e) {
         const btnElimina = e.target.closest('.delete-recipe-btn');
         if (btnElimina) {
@@ -61,7 +65,7 @@ class GestioneDashboard {
         }
     }
 
-    // Rimuovi card dalla UI (con animazione)
+    // Rimuovi card dalla UI
     rimuoviCardDallaUI(btn) {
         const colonna = btn.closest('.col');
         if (colonna) {

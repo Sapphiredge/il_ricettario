@@ -66,6 +66,7 @@ class GestioneRicetta {
         }
     }
 
+    // Invia la richiesta DELETE e reindirizza alla dashboard in caso di successo.
     async eliminaRicetta() {
         try {
             const response = await fetch(`/ricette/${this.recipeId}/cancella`, {
@@ -106,6 +107,7 @@ class PaginatoreRecensioni {
         this.init();
     }
 
+    // Inizializzazione dei listener di navigazione della paginazione recensioni.
     init() {
         if (!this.righe || this.righe.length === 0) {
             if (this.containerPagination) {
@@ -174,6 +176,7 @@ class PaginatoreRecensioni {
         }
     }
 
+    // Scorre la pagina fino alla sezione delle recensioni.
     scrollToTop() {
         const section = document.querySelector('.border-top.pt-5');
         if (section) {
@@ -192,10 +195,12 @@ class ValidatoreRecensione {
         this.init();
     }
 
+    // Registra il listener per la validazione al submit del form.
     init() {
         this.form.addEventListener('submit', (e) => this.handleSubmit(e));
     }
 
+    // Valida la presenza del voto e invia la recensione via AJAX.
     async handleSubmit(e) {
         e.preventDefault();
         const hasRating = !!document.querySelector('.star-input:checked');
@@ -234,6 +239,7 @@ class ValidatoreRecensione {
         }
     }
 
+    // Mostra l'alert di errore per voto mancante e lo nasconde dopo 4 secondi.
     mostraAlert() {
         this.alert.classList.remove('d-none');
         setTimeout(() => this.alert.classList.add('d-none'), 4000);

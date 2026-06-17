@@ -1,8 +1,9 @@
 'use strict';
 
-//Classe helper per la gestione delle raccolte delle ricette
+/**
+ * Classe helper per l'aggiunta e la rimozione di ricette dalle raccolte
+ */
 class GestioneRaccolteRicetta {
-
     constructor() {
         this.btnSave = document.getElementById('btn-save-recipe');
         this.savedIcon = document.getElementById('saved-icon');
@@ -30,7 +31,7 @@ class GestioneRaccolteRicetta {
         document.querySelectorAll('.btn-raccolta-toggle').forEach(btn => this.bindToggleBtn(btn));
     }
 
-    //metodo per la gestione grafica del pulsante di salvataggio/rimozione ricette da una raccolta
+    //metodo per la rimozione o salvataggio di una ricetta 
     aggiornaBookmark() {
         if (this.contieneRaccoltaCount > 0) {
             this.btnSave.classList.add('active-saved');
@@ -43,7 +44,7 @@ class GestioneRaccolteRicetta {
         }
     }
 
-    //metodo per la gestione della visualizzazione del feedback all'utente al salvataggio/rimozione di una ricetta da una raccolta
+    // mostra un messaggio di conferma per l'utente se si è sicuri
     mostraFeedback(msg, tipo = 'success') {
         if (!this.feedbackEl) return;
         this.feedbackEl.textContent = msg;
@@ -52,7 +53,7 @@ class GestioneRaccolteRicetta {
         setTimeout(() => this.feedbackEl.classList.add('d-none'), 3000);
     }
 
-    //metodo per la gestione del click sui pulsanti di salvataggio/rimozione ricette da una raccolta
+    // me
     bindToggleBtn(btn) {
         btn.addEventListener('click', async () => {
             const collectionId = btn.dataset.collectionId;
