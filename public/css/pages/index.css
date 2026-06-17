@@ -1,0 +1,101 @@
+/* Ombra esterna ai testi */
+.text-shadow {
+  text-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Nasconde scrollbar per Webkit */
+.category-scroll-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Nasconde scrollbar ed abilita snap-scroll */
+.category-scroll-hide {
+  -ms-overflow-style: none;   /* Per Internet Explorer ed Edge */
+  scrollbar-width: none;   /* Per Firefox */
+  scroll-snap-type: x mandatory;   /* Aggancia lo scroll orizzontale agli elementi */
+}
+
+/* Animazione card categorie */
+.category-card-hover {
+  scroll-snap-align: start;
+  transition: all var(--transition-fast, 0.3s ease);
+  background-color: var(--surface-light, white);
+}
+
+/* Hover su card categoria */
+.category-card-hover:hover {
+  border-color: rgba(107, 143, 36, 0.4) !important;
+  background-color: var(--surface-light, white);
+}
+
+/* Ingrandimento icona al passaggio mouse */
+.category-card-hover:hover .category-icon-hover {
+  transform: scale(1.1);
+}
+
+/* Transizione pulsanti carosello */
+.carousel-btn-hover {
+  transition: background-color var(--transition-fast, 0.3s ease);
+}
+
+/* Hover pulsanti carosello */
+.carousel-btn-hover:hover {
+  background-color: rgba(107, 143, 36, 0.1) !important;
+}
+
+/* Bottone bianco personalizzato */
+.btn-white {
+  background-color: white;
+  color: var(--text-main-dark);
+}
+
+/* Abilita aggancio scroll orizzontale */
+.snap-x {
+  scroll-snap-type: x mandatory;
+}
+
+/* Scorrimento fluido */
+.scroll-smooth {
+  scroll-behavior: smooth;
+}
+
+/* Banner principale Homepage (Hero) */
+.index-hero-banner {
+  max-width: 1440px;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url("/images/table_food.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+/* Contenuto interno del Banner Hero */
+.index-hero-content {
+  max-width: 768px;
+}
+
+/* Sottotitolo del Banner Hero */
+.index-hero-subtitle {
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 672px;
+}
+
+/* Form di ricerca del Banner Hero */
+.index-hero-search-form {
+  max-width: 600px;
+}
+
+/* Elemento del carosello orizzontale */
+.index-carousel-item {
+  width: 300px;
+  scroll-snap-align: start;
+}
+
+/* Bordo tratteggiato personalizzato */
+.index-dashed-border {
+  border-style: dashed !important;
+}
+
+/* Colore e transizione icone categoria */
+.category-icon-hover {
+  transition: transform var(--transition-fast, 0.3s ease);
+  color: var(--color-primary);
+}

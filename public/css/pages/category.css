@@ -1,0 +1,22 @@
+/* Contenitore testo del banner */
+.category-hero-content {
+    z-index: 10;
+    max-width: 800px;
+}
+
+/* Sfondo del banner di categoria */
+.category-hero-banner {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Descrizione nel banner */
+.category-hero-desc {
+    max-width: 400px;
+}
+
+/* Icona del menu nella categoria */
+.category-stat-icon {
+    color: var(--color-primary);
+}

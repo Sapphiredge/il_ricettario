@@ -1,0 +1,76 @@
+/* Transizione colore di sfondo */
+.transition-bg {
+    transition: background-color var(--transition-fast, 0.3s ease);
+}
+
+/* Hover colore di sfondo */
+.transition-bg:hover {
+    background-color: #f8f9fa !important;
+}
+
+/* Hover pulsanti admin */
+.admin-btn-hover:hover {
+    background-color: #e2e8f0 !important;
+}
+
+/* Contenitore paginazione */
+.pagination-container {
+    transition: all 0.3s ease;
+}
+
+/* Pulsanti di paginazione */
+.pagination-container button {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px !important;
+    transition: all 0.2s ease;
+}
+
+/* Pulsanti disabilitati */
+.pagination-container button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: #f8f9fa;
+}
+
+/* Hover pulsanti abilitati */
+.pagination-container button:hover:not(:disabled) {
+    background-color: #6b8f24 !important;
+    color: white !important;
+    border-color: #6b8f24 !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* Numero pagina corrente */
+.pagination-container .fw-bold {
+    color: #111827;
+}
+
+/* Larghezza dashboard principale */
+.admin-dashboard-container {
+    max-width: 1400px;
+}
+
+/* Larghezza campo ricerca */
+.admin-search-container {
+    max-width: 300px;
+}
+
+/* Sfondo testata tabella */
+.admin-table-header {
+    background-color: #f9fafb;
+}
+
+/* Larghezza celle della tabella */
+.admin-table-cell {
+    max-width: 250px;
+}
+
+/* Adattamento immagine avatar */
+.admin-avatar {
+    object-fit: cover;
+}

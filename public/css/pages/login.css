@@ -1,0 +1,53 @@
+/* Sfondo a tutto schermo */
+.login-page-bg {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.4)), url('/images/background_login.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* Focus sul wrapper degli input */
+.form-input-wrapper:focus-within {
+  box-shadow: 0 0 0 2px rgba(107, 143, 36, 0.5) !important;
+}
+
+/* Bordo e transizioni degli input */
+.form-input-wrapper .input-group-text, 
+.form-input-wrapper .form-control {
+  border-color: rgba(243, 237, 231, 0.5) !important;
+  transition: all var(--transition-fast, 0.3s ease);
+}
+
+/* Focus su input interno */
+.form-input-wrapper:focus-within .input-group-text, 
+.form-input-wrapper:focus-within .form-control {
+  border-color: transparent !important;
+  background-color: #fff !important;
+}
+
+/* Colore primario evidenziato */
+.custom-text-primary {
+  color: var(--color-primary) !important;
+}
+
+/* Hover link di autenticazione */
+.auth-link-hover:hover {
+  text-decoration: underline !important;
+}
+
+/* Checkbox personalizzato selezionato */
+.custom-checkbox:checked {
+  background-color: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
+}
+
+/* Larghezza card di login */
+.login-card {
+    max-width: 440px;
+}
+
+/* Colore testo di errore */
+.login-alert-text {
+    color: #fca5a5 !important;
+}

@@ -1,0 +1,276 @@
+/* Animazione menu dropdown */
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Stile menu a tendina */
+.navbar .dropdown-menu {
+  border: none;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+  margin-top: 10px !important;
+}
+
+/* Mostra menu dropdown con animazione */
+.navbar .dropdown-menu.show {
+  animation: dropdownFadeIn 0.3s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+
+/* Hover su elemento dropdown */
+.navbar .dropdown-item:not(.text-danger):hover,
+.navbar .dropdown-item:not(.text-danger):focus {
+  background-color: rgba(107, 143, 36, 0.1);
+  color: var(--color-primary);
+}
+
+/* Elemento dropdown attivo */
+.navbar .dropdown-item:not(.text-danger):active {
+  background-color: var(--color-primary) !important;
+  color: #fff !important;
+}
+
+/* Hover su elemento pericoloso dropdown */
+.navbar .dropdown-item.text-danger:hover,
+.navbar .dropdown-item.text-danger:focus {
+  background-color: rgba(220, 38, 38, 0.1);
+  color: #dc2626 !important;
+}
+
+/* Elemento pericoloso dropdown attivo */
+.navbar .dropdown-item.text-danger:active {
+  background-color: #dc2626 !important;
+  color: #fff !important;
+}
+
+/* Larghezza scrollbar */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+/* Sfondo traccia scrollbar */
+::-webkit-scrollbar-track {
+  background: var(--bg-light);
+}
+
+/* Cursore scrollbar */
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-primary);
+  border-radius: 6px;
+  border: 3px solid var(--bg-light);
+}
+
+/* Hover cursore scrollbar */
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-primary-hover);
+}
+
+/* Placeholder Webkit */
+::-webkit-input-placeholder {
+  color: rgba(108, 117, 125, 0.5) !important;
+}
+
+/* Placeholder MS */
+:-ms-input-placeholder {
+  color: rgba(108, 117, 125, 0.5) !important;
+}
+
+/* Placeholder standard */
+::placeholder,
+.form-control::placeholder,
+.custom-input::placeholder {
+  color: rgba(108, 117, 125, 0.5) !important;
+  opacity: 1 !important;
+}
+
+/* Animazione fade-in per SPA */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+
+  99% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Contenitore principale */
+#main-content {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+/* Fade-in su cambio pagina SPA */
+#main-content.fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+/* Spaziatura lettere stretta */
+.ls-tight {
+  letter-spacing: -0.025em;
+}
+
+/* Spaziatura lettere media-stretta */
+.ls-snug {
+  letter-spacing: -0.015em;
+}
+
+/* Spaziatura lettere normale */
+.ls-mid {
+  letter-spacing: 0.025em;
+}
+
+/* Spaziatura lettere larga */
+.ls-wide {
+  letter-spacing: 0.05em;
+}
+
+/* Spaziatura lettere molto larga */
+.ls-wider {
+  letter-spacing: 0.2em;
+}
+
+/* Interlinea comoda */
+.lh-relaxed {
+  line-height: 1.6;
+}
+
+/* Interlinea stretta */
+.lh-snug {
+  line-height: 1.2;
+}
+
+/* Icona grande */
+.icon-lg {
+  font-size: 28px;
+}
+
+/* Icona extra grande */
+.icon-xl {
+  font-size: 48px;
+}
+
+/* Icona 2x grande */
+.icon-2xl {
+  font-size: 64px;
+}
+
+/* Spaziatura titolo brand */
+.brand-title {
+  letter-spacing: -0.015em;
+}
+
+/* Disabilita ridimensionamento */
+.no-resize {
+  resize: none;
+}
+
+/* Contenitore form medio */
+.form-container-md {
+  max-width: 900px;
+}
+
+/* Textarea altezza media */
+.textarea-md {
+  min-height: 120px;
+}
+
+/* Textarea altezza piccola */
+.textarea-sm {
+  min-height: 80px;
+}
+
+/* Ridimensionamento verticale */
+.resize-v {
+  resize: vertical;
+}
+
+/* Cerchio contatore step */
+.step-counter-circle {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  background-color: var(--color-primary);
+}
+
+/* Icona logo brand */
+.brand-icon {
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  line-height: 1;
+}
+
+/* Gruppo ricerca navbar */
+.navbar-search-group {
+  max-width: 500px;
+  width: 100%;
+}
+
+/* Barra ricerca desktop centrata */
+@media (min-width: 992px) {
+  .navbar-search-desktop-centered {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 500px;
+    z-index: 10;
+    margin: 0 !important;
+  }
+}
+
+/* Avatar utente navbar */
+.navbar-user-avatar {
+  object-fit: cover;
+  width: 36px;
+  height: 36px;
+}
+
+/* Icona ricerca navbar */
+.navbar-search-icon {
+  color: var(--color-primary);
+}
+
+/* Banner eroe categoria */
+.category-hero-banner {
+  height: 240px;
+  background-color: #2d3748;
+}
+
+/* Banner eroe categoria desktop */
+@media(min-width: 768px) {
+  .category-hero-banner {
+    height: 400px;
+  }
+}
+
+/* Overlay banner categoria */
+.category-hero-overlay {
+  background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7));
+}
+
+/* Banner eroe homepage */
+.index-hero-banner {
+  min-height: 480px;
+  background-color: #2d3748;
+}
+
+/* Input group ricerca homepage */
+.index-hero-search-input-group {
+  border-radius: 12px;
+}

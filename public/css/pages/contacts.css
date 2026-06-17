@@ -1,0 +1,9 @@
+/* Contenitore card contatti */
+.contacts-card-wrapper {
+    max-width: 600px;
+}
+
+/* Icona colorata primaria */
+.contacts-icon-primary {
+    color: var(--color-primary);
+}

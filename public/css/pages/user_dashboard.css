@@ -1,0 +1,47 @@
+/* Ombra pulsante principale */
+.shadow-btn {
+  box-shadow: 0 4px 14px 0 rgba(107, 143, 36, 0.25);
+}
+
+/* Transizione card statistiche */
+.stat-card-hover {
+  transition: all var(--transition-fast, 0.3s ease);
+}
+
+/* Hover card statistiche */
+.stat-card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md, 0 4px 6px rgba(0, 0, 0, 0.07)) !important;
+  border-color: var(--color-primary) !important;
+}
+
+/* Bordo tratteggiato personalizzato */
+.border-dashed {
+  border: 2px dashed var(--border-color, #dee2e6) !important;
+}
+
+/* Colore primario evidenziato */
+.custom-text-primary {
+  color: var(--color-primary) !important;
+}
+
+/* Hover link di autenticazione */
+.auth-link-hover:hover {
+  text-decoration: underline !important;
+}
+
+/* Larghezza contenitore dashboard */
+.dashboard-container {
+  max-width: 1400px;
+}
+
+/* Altezza minima stato vuoto */
+.dashboard-empty-state {
+  min-height: 250px;
+}
+
+/* Icona statistica primaria */
+.stat-icon-primary {
+  color: var(--color-primary);
+  opacity: 0.8;
+}

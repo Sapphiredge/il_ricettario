@@ -1,0 +1,32 @@
+/* Header dei dettagli della raccolta */
+.collection-detail-header {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.07);
+    border-radius: 18px;
+    padding: 1.75rem 2rem;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* Icona per lo stato vuoto */
+.collection-detail-empty-icon {
+    font-size: 5rem;
+    display: block;
+}
+
+/* Separatore del breadcrumb */
+.breadcrumb-item+.breadcrumb-item::before {
+    content: "›";
+    color: #adb5bd;
+}
+
+/* Contenitore breadcrumb trasparente */
+.breadcrumb {
+    background: transparent;
+    padding: 0;
+    margin: 0;
+}
+
+/* Bordo tratteggiato generico */
+.border-dashed {
+    border: 1px dashed #dee2e6 !important;
+}

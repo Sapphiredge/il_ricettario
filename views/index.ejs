@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Il Ricettario Homepage</title>
+
+    <!-- Google Fonts & Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS Overrides -->
+    <link rel="stylesheet" href="/css/partials/recipe-card.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/partials/base_style.css">
+    <link rel="stylesheet" href="/css/partials/navbar.css">
+
+    <link rel="stylesheet" href="/css/partials/footer.css">
+    <link rel="stylesheet" href="/css/pages/index.css">
+</head>
+
+<body class="d-flex flex-column min-vh-100 bg-light">
+    <!-- Barra di navigazione superiore -->
+    <%- include('partials/navbar') %>
+
+        <main id="main-content" class="flex-grow-1">
+            <!-- Sezione Hero: Messaggio di benvenuto e ricerca -->
+            <div class="px-3 px-md-4 py-4 w-100">
+                <div
+                    class="p-4 p-md-5 text-center text-white rounded-5 shadow position-relative overflow-hidden d-flex flex-column align-items-center justify-content-center mx-auto index-hero-banner">
+
+                    <div class="z-1 px-3 d-flex flex-column gap-3 index-hero-content" data-aos="fade-up">
+                        <h1 class="display-4 fw-bold text-shadow mb-3 mt-4 lh-snug">Scopri e cucina le
+                            tue prossime ricette preferite!</h1>
+                        <h2 class="fs-5 fw-normal text-shadow mb-4 mx-auto index-hero-subtitle lh-relaxed">
+                            Unisciti alla nostra vivace community di amanti del cibo, condividi i tuoi capolavori
+                            culinari e inizia a cucinare qualcosa di straordinario oggi.
+                        </h2>
+                    </div>
+
+                    <form action="/cerca" method="GET" class="w-100 mt-4 z-1 index-hero-search-form" data-aos="fade-up"
+                        data-aos-delay="200">
+                        <div
+                            class="input-group input-group-lg bg-white shadow-sm search-wrapper-focus overflow-hidden index-hero-search-input-group">
+                            <span class="input-group-text bg-white border-0 text-secondary ps-4 pe-2">
+                                <span class="material-symbols-outlined">search</span>
+                            </span>
+                            <input class="form-control border-0 shadow-none ps-2 py-3 fs-6"
+                                placeholder="Cerca una ricetta (es. Vegano, Senza Glutine)..." name="q" value="" />
+                            <button class="btn btn-primary px-4 fw-bold custom-btn-primary" type="submit">Cerca</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Elenco delle categorie filtrate -->
+            <div class="container py-4">
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-2"
+                    data-aos="fade-up">
+                    <h2 class="h4 fw-bold m-0 ls-snug">Esplora per Categoria</h2>
+                </div>
+
+                <div class="d-flex gap-3 overflow-x-auto pb-3 snap-x category-scroll-hide w-100">
+                    <% if (cats && cats.length> 0) { %>
+                        <% cats.forEach(c=> { %>
+                            <a href="/categoria/<%= c.name %>"
+                                class="btn btn-white border rounded-pill d-flex align-items-center justify-content-center gap-2 px-4 py-2 flex-shrink-0 category-card-hover text-decoration-none"
+                                data-aos="fade-right" data-aos-delay="<%= c.delay %>">
+                                <span class="material-symbols-outlined category-icon-hover">
+                                    <%= c.icon %>
+                                </span>
+                                <span class="fw-bold fs-6 text-dark">
+                                    <%= c.name %>
+                                </span>
+                            </a>
+                            <% }) %>
+                                <% } %>
+                </div>
+            </div>
+
+            <!-- Carousel: Ricette aggiunte di recente -->
+            <div class="container py-4 mb-2 position-relative">
+                <div class="d-flex justify-content-between align-items-center mb-4" data-aos="fade-up">
+                    <h2 class="h4 fw-bold m-0 ls-snug">Aggiunte Ultime 24 Ore</h2>
+                    <div class="d-flex gap-2">
+                        <button id="btn-scroll-left"
+                            class="btn btn-white border rounded-circle shadow-sm p-2 d-flex align-items-center justify-content-center bg-white carousel-btn-hover"><span
+                                class="material-symbols-outlined fs-5">chevron_left</span></button>
+                        <button id="btn-scroll-right"
+                            class="btn btn-white border rounded-circle shadow-sm p-2 d-flex align-items-center justify-content-center bg-white carousel-btn-hover"><span
+                                class="material-symbols-outlined fs-5">chevron_right</span></button>
+                    </div>
+                </div>
+
+                <div id="recent-recipes-container"
+                    class="d-flex gap-4 overflow-x-auto pb-4 pt-2 snap-x category-scroll-hide w-100 scroll-smooth">
+                    <% if (typeof recentRecipes !=='undefined' && recentRecipes.length> 0) { %>
+                        <% recentRecipes.forEach(recipe=> { %>
+                            <div class="flex-shrink-0 index-carousel-item">
+                                <%- include('partials/recipe-card', { recipe }) %>
+                            </div>
+                            <% }) %>
+                                <% } else { %>
+                                    <div class="w-100 py-4 text-center text-muted border index-dashed-border rounded-4">
+                                        <p class="m-0">Nessuna nuova ricetta nelle ultime 24 ore. Torna a controllare
+                                            più tardi!</p>
+                                    </div>
+                                    <% } %>
+                </div>
+            </div>
+
+            <!-- Griglia: Le ricette più amate dalla community -->
+            <div class="container py-4 mb-5 border-top pt-5">
+                <div class="d-flex justify-content-between align-items-center mb-4" data-aos="fade-up">
+                    <h2 class="h4 fw-bold m-0 ls-snug">Le Ricette Più Votate</h2>
+                </div>
+
+                <% if (typeof topRatedRecipes !=='undefined' && topRatedRecipes.length> 0) { %>
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 pt-2">
+                        <% topRatedRecipes.forEach(recipe=> { %>
+                            <div class="col">
+                                <%- include('partials/recipe-card', { recipe }) %>
+                            </div>
+                            <% }) %>
+                    </div>
+                    <% } else { %>
+                        <div class="w-100 mt-3 py-5 text-center text-muted border index-dashed-border rounded-4">
+                            <p class="m-0">Nessuna ricetta pubblicata trovata. Aggiungi la tua prima ricetta dal
+                                Pannello Chef!</p>
+                        </div>
+                        <% } %>
+            </div>
+
+        </main>
+
+        <!-- Footer e inclusione script -->
+        <%- include('partials/footer') %>
+            <%- include('partials/scripts') %>
+                <script type="module" src="/js/index.js"></script>
+</body>
+
+</html>

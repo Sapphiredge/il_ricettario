@@ -1,0 +1,22 @@
+<!-- Libreria per la gestione del routing -->
+<script src="/scripts/page/page.js"></script>
+
+<!-- Bootstrap e Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Libreria AOS -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        if (typeof AOS !== 'undefined') {
+            AOS.init({
+                duration: 700,
+                once: true,
+                offset: 80,
+                disable: 'mobile'
+            });
+        }
+    });
+</script>
+<!-- Logica principale per il routing asincrono delle pagine -->
+<script type="module" src="/js/routing.js"></script>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Le mie Raccolte - Il Ricettario</title>
+    <meta name="description" content="Gestisci le tue raccolte di ricette preferite su Il Ricettario.">
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="/css/partials/base_style.css">
+    <link rel="stylesheet" href="/css/partials/navbar.css">
+    <link rel="stylesheet" href="/css/partials/footer.css">
+    <link rel="stylesheet" href="/css/pages/collections.css">
+</head>
+
+<body class="d-flex flex-column min-vh-100 bg-light">
+    <%- include('partials/navbar') %>
+
+    <main id="main-content" class="flex-grow-1">
+        <div class="container py-4 py-md-5">
+
+            <div class="d-flex align-items-center justify-content-between mb-5 flex-wrap gap-3" data-aos="fade-up">
+                <div>
+                    <div class="d-flex align-items-center mb-1">
+                        <h1 class="fw-bold text-dark fs-2 m-0">Le mie Raccolte</h1>
+                    </div>
+                    <p class="text-secondary m-0">Organizza le tue ricette preferite in gruppi personalizzati</p>
+                </div>
+                <button id="btn-nuova-raccolta" class="btn btn-primary custom-btn-primary fw-bold px-4 py-2 d-flex align-items-center gap-2 shadow-btn">
+                    <span class="material-symbols-outlined fs-5">add</span>
+                    Nuova Raccolta
+                </button>
+            </div>
+
+            <% if (raccolte && raccolte.length > 0) { %>
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                    <% raccolte.forEach((raccolta, idx) => { %>
+                        <div class="col" data-aos="fade-up" data-aos-delay="<%= idx * 60 %>">
+                            <div class="collection-card h-100">
+                                <div class="collection-card-bg"></div>
+
+                                <div class="collection-card-body">
+                                    <h2 class="collection-name flex-grow-1 mb-3"><%= raccolta.name %></h2>
+
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <span class="collection-count-badge mb-0">
+                                            <%= raccolta.recipe_count %> <%= raccolta.recipe_count === 1 ? 'ricetta' : 'ricette' %>
+                                        </span>
+                                        <p class="collection-date mb-0">
+                                            <span class="material-symbols-outlined fs-6 align-middle">calendar_today</span>
+                                            <%= new Date(raccolta.created_at).toLocaleDateString('it-IT') %>
+                                        </p>
+                                    </div>
+
+                                    <div class="d-flex gap-2 mt-auto pt-3 border-top border-light">
+                                        <a href="/raccolte/<%= raccolta.id %>"
+                                            class="btn btn-primary custom-btn-primary fw-bold flex-grow-1 d-flex align-items-center justify-content-center gap-2">
+                                            <span class="material-symbols-outlined fs-6">open_in_new</span>
+                                            Apri
+                                        </a>
+                                        <button class="btn btn-light border btn-sm d-flex align-items-center justify-content-center flex-grow-1 text-muted recipe-btn-danger-hover btn-elimina-raccolta"
+                                            data-id="<%= raccolta.id %>" data-name="<%= raccolta.name %>"
+                                            title="Elimina raccolta">
+                                            <span class="material-symbols-outlined fs-6">delete</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+            <% } else { %>
+                <div class="text-center py-5 bg-white border border-dashed rounded-4 mt-2" data-aos="fade-up">
+                    <span class="material-symbols-outlined text-secondary mb-3 opacity-50 collections-empty-icon">collections_bookmark</span>
+                    <h2 class="h4 fw-bold text-dark mb-2">Nessuna raccolta ancora</h2>
+                    <p class="text-secondary mx-auto mb-4" style="max-width:400px">
+                        Crea la tua prima raccolta per organizzare le ricette che ami di più.
+                    </p>
+                    <button id="btn-nuova-raccolta-empty" class="btn btn-primary custom-btn-primary fw-bold px-4 py-2 d-inline-flex align-items-center gap-2">
+                        <span class="material-symbols-outlined fs-5">add</span>
+                        Crea la prima raccolta
+                    </button>
+                </div>
+            <% } %>
+        </div>
+
+        <div class="modal fade" id="modalCreaRaccolta" tabindex="-1" aria-labelledby="modalCreaRaccoltaLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content border-0 shadow-lg rounded-4">
+                    <div class="modal-header border-0 pb-0 px-4 pt-4">
+                        <h5 class="modal-title fw-bold" id="modalCreaRaccoltaLabel">
+                            <span class="material-symbols-outlined align-middle me-2 custom-text-primary">collections_bookmark</span>
+                            Nuova Raccolta
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Chiudi"></button>
+                    </div>
+                    <div class="modal-body px-4 py-3">
+                        <div id="modal-crea-error" class="alert alert-danger d-none py-2 px-3 mb-3" role="alert"></div>
+                        <div class="mb-3">
+                            <label for="nomeRaccolta" class="form-label fw-semibold text-dark">Nome raccolta <span class="text-danger">*</span></label>
+                            <input type="text" id="nomeRaccolta" class="form-control border-light bg-light shadow-none"
+                                placeholder="Es. Ricette della domenica, Dolci preferiti..." maxlength="100">
+                        </div>
+                    </div>
+                    <div class="modal-footer border-0 px-4 pb-4 pt-1 gap-2">
+                        <button type="button" class="btn btn-light border fw-semibold" data-bs-dismiss="modal">Annulla</button>
+                        <button type="button" id="btn-salva-raccolta" class="btn btn-primary custom-btn-primary fw-bold px-4">
+                            <span class="material-symbols-outlined fs-6 align-middle me-1">save</span>
+                            Crea Raccolta
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <%- include('partials/footer') %>
+    <%- include('partials/scripts') %>
+    <script type="module" src="/js/collections.js"></script>
+</body>
+
+</html>

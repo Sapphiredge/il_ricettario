@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Il Ricettario - <%= typeof recipe !=='undefined' && recipe ? recipe.title : 'Ricetta' %>
+    </title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="/css/partials/base_style.css">
+    <link rel="stylesheet" href="/css/partials/navbar.css">
+
+    <link rel="stylesheet" href="/css/partials/footer.css">
+    <link rel="stylesheet" href="/css/pages/recipe.css">
+</head>
+
+<body class="d-flex flex-column min-vh-100 bg-light">
+    <%- include('partials/navbar') %>
+
+        <main id="main-content" class="flex-grow-1 py-4 py-md-5 px-3">
+
+            <div class="container recipe-container">
+                <% if (typeof error !=='undefined' && error) { %>
+                    <div class="text-center py-5">
+                        <span
+                            class="material-symbols-outlined text-secondary mb-4 opacity-50 recipe-error-icon">error</span>
+                        <h2 class="h3 fw-bold text-dark mb-3">
+                            <%= error %>
+                        </h2>
+                        <p class="text-secondary mb-4 mx-auto recipe-error-text-container">La ricetta che stai cercando
+                            potrebbe essere stata rimossa o non essere disponibile.</p>
+                        <a href="/" class="btn btn-primary custom-btn-primary px-4 py-2 fw-bold">Torna alla Home</a>
+                    </div>
+                    <% } else if (typeof recipe !=='undefined' && recipe) { %>
+                        <div class="row g-4 g-lg-5 mb-5 align-items-start">
+
+                            <!-- Immagine della ricetta -->
+                            <div class="col-12 col-lg-6" data-aos="fade-right">
+                                <div
+                                    class="position-relative rounded-4 overflow-hidden shadow-sm ratio ratio-4x3 ratio-lg-16x9">
+                                    <img alt="<%= recipe.title %>" loading="lazy" class="object-fit-cover w-100 h-100"
+                                        src="/images/card.png" />
+                                    <div class="position-absolute top-0 end-0 p-3">
+                                        <% if (user && user.id !==recipe.author_id && user.role !=='admin' ) { %>
+                                            <button id="btn-save-recipe" data-recipe-id="<%= recipe.id %>"
+                                                class="btn btn-light rounded-circle p-2 shadow-sm d-inline-flex align-items-center justify-content-center recipe-save-btn <%= typeof ricettaSalvata !== 'undefined' && ricettaSalvata ? 'active-saved' : 'text-secondary' %>"
+                                                title="Salva in una raccolta">
+                                                <span id="saved-icon"
+                                                    class="material-symbols-outlined fs-5 <%= typeof ricettaSalvata !== 'undefined' && ricettaSalvata ? 'fill-current' : '' %>">bookmark</span>
+                                            </button>
+                                            <% } else if (!user) { %>
+                                                <a href="/login"
+                                                    class="btn btn-light rounded-circle p-2 shadow-sm d-inline-flex align-items-center justify-content-center recipe-save-btn text-secondary"
+                                                    title="Accedi per salvare">
+                                                    <span class="material-symbols-outlined fs-5">bookmark</span>
+                                                </a>
+                                                <% } %>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Informazioni sulla ricetta -->
+                            <div class="col-12 col-lg-6 d-flex flex-column gap-3 gap-md-4" data-aos="fade-left">
+                                <!-- Tags -->
+                                <div class="d-flex flex-wrap align-items-center gap-2">
+                                    <% const datiCard=(typeof recipe !=='undefined' && recipe) ?
+                                        AiutiCard.getDatiCard(recipe) : null; %>
+                                        <span
+                                            class="badge rounded-pill border border-primary bg-white text-primary text-uppercase px-3 py-1 ls-wide">
+                                            <%= recipe.category %>
+                                        </span>
+                                        <span
+                                            class="badge rounded-pill text-uppercase px-3 py-1 <%= datiCard.diffBadgeClass %> ls-wide">
+                                            <%= recipe.difficulty %>
+                                        </span>
+                                        <% if (recipe.tags && recipe.tags.length> 0) { %>
+                                            <% recipe.tags.forEach(tag=> { %>
+                                                <span
+                                                    class="badge rounded-pill border text-secondary fw-normal px-2 py-1 bg-white tag-custom">#
+                                                    <%= tag %>
+                                                </span>
+                                                <% }) %>
+                                                    <% } %>
+                                </div>
+
+                                <!-- Titolo e Azioni -->
+                                <div class="d-flex align-items-center justify-content-between gap-3">
+                                    <h1 class="display-5 fw-bold text-dark m-0 ls-tight">
+                                        <%= recipe.title %>
+                                    </h1>
+                                    <% if (user && user.id===recipe.author_id) { %>
+                                        <div class="d-flex flex-shrink-0 gap-2">
+                                            <a href="/ricette/<%= recipe.id %>/modifica"
+                                                class="btn btn-light border p-2 custom-text-primary rounded-circle d-inline-flex align-items-center justify-content-center shadow-sm btn-edit-hover"
+                                                title="Modifica Ricetta">
+                                                <span class="material-symbols-outlined fs-5">edit</span>
+                                            </a>
+                                            <button type="button" id="btn-delete-recipe"
+                                                class="btn btn-light border p-2 text-danger rounded-circle d-inline-flex align-items-center justify-content-center shadow-sm btn-danger-hover"
+                                                title="Elimina Ricetta" data-id="<%= recipe.id %>"
+                                                data-title="<%= recipe.title %>">
+                                                <span class="material-symbols-outlined fs-5">delete</span>
+                                            </button>
+                                        </div>
+                                        <% } %>
+                                </div>
+
+                                <!-- Autore e Valutazione -->
+                                <div class="d-flex align-items-center gap-3 py-3 border-top border-bottom">
+                                    <div
+                                        class="rounded-circle border recipe-author-avatar <%= recipe.author_role === 'admin' ? 'admin' : 'chef' %>">
+                                    </div>
+                                    <div class="d-flex flex-column">
+                                        <span class="fw-bold text-dark">
+                                            <%= recipe.author_name %>
+                                        </span>
+                                        <span class="text-secondary small">Pubblicato il <%= new
+                                                Date(recipe.created_at).toLocaleDateString('it-IT') %></span>
+                                    </div>
+                                    <div class="ms-auto d-flex align-items-center gap-1 text-warning">
+                                        <span class="material-symbols-outlined fill-current fs-5">star</span>
+                                        <span class="fw-bold text-dark fs-5">
+                                            <%= recipe.average_rating ? Number(recipe.average_rating).toFixed(1) : 'N/A'
+                                                %>
+                                        </span>
+                                        <span class="text-secondary small ms-1">(<%if (recipe.review_count===1) { %>
+                                                <%= recipe.review_count %> recensione
+                                                    <% } else { %>
+                                                        <%= recipe.review_count %> recensioni
+                                                            <% } %>)
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <!-- Statistiche rapide-->
+                                <div class="row row-cols-2 row-cols-md-5 g-3 mb-2" data-aos="fade-up">
+                                    <div class="col">
+                                        <div
+                                            class="bg-white p-3 rounded-3 text-center d-flex flex-column align-items-center shadow-sm h-100 border border-light">
+                                            <span
+                                                class="material-symbols-outlined mb-2 custom-text-primary">schedule</span>
+                                            <span
+                                                class="small fw-bold text-secondary text-uppercase ls-wide">Prep.</span>
+                                            <span class="fw-bold text-dark">
+                                                <%= recipe.prep_time || 0 %> min
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div
+                                            class="bg-white p-3 rounded-3 text-center d-flex flex-column align-items-center shadow-sm h-100 border border-light">
+                                            <span
+                                                class="material-symbols-outlined mb-2 custom-text-primary">cooking</span>
+                                            <span
+                                                class="small fw-bold text-secondary text-uppercase ls-wide">Cottura</span>
+                                            <span class="fw-bold text-dark">
+                                                <%= recipe.cook_time || 0 %> min
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div
+                                            class="bg-white p-3 rounded-3 text-center d-flex flex-column align-items-center shadow-sm h-100 border border-light">
+                                            <span
+                                                class="material-symbols-outlined mb-2 custom-text-primary">group</span>
+                                            <span
+                                                class="small fw-bold text-secondary text-uppercase ls-wide">Porzioni</span>
+                                            <span class="fw-bold text-dark">
+                                                <%= recipe.servings || 1 %> px
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div
+                                            class="bg-white p-3 rounded-3 text-center d-flex flex-column align-items-center shadow-sm h-100 border border-light">
+                                            <span class="material-symbols-outlined mb-2 custom-text-primary">bolt</span>
+                                            <span
+                                                class="small fw-bold text-secondary text-uppercase ls-wide">Calorie</span>
+                                            <span class="fw-bold text-dark">
+                                                <%= recipe.calories || '-' %> kcal
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <% if (recipe.cooking_method) { %>
+                                        <div class="col">
+                                            <div
+                                                class="bg-white p-3 rounded-3 text-center d-flex flex-column align-items-center shadow-sm h-100 border border-light">
+                                                <span
+                                                    class="material-symbols-outlined mb-2 custom-text-primary">outdoor_grill</span>
+                                                <span class="small fw-bold text-secondary text-uppercase ls-wide">Tipo
+                                                    Cottura</span>
+                                                <span class="fw-bold text-dark">
+                                                    <%= recipe.cooking_method %>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <% } %>
+                                </div>
+
+                                <p class="text-secondary fs-6 lh-relaxed">
+                                    <%= recipe.description %>
+                                </p>
+
+                                <div class="d-flex align-items-center gap-3 mt-1 p-3 bg-white border border-light rounded-3 shadow-sm"
+                                    data-aos="fade-up">
+                                    <div
+                                        class="d-flex align-items-center justify-content-center bg-danger bg-opacity-10 text-danger rounded-circle recipe-suggested-drink-icon-container">
+                                        <span class="material-symbols-outlined fs-4 text-danger">wine_bar</span>
+                                    </div>
+                                    <div>
+                                        <span
+                                            class="d-block small fw-bold text-secondary text-uppercase ls-wide">L'abbinamento
+                                            perfetto</span>
+                                        <span class="fw-bold text-dark fs-5 ls-mid">
+                                            <%= recipe.suggested_drink || 'Quello che vuoi!' %>
+                                        </span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- Ingredienti e Procedimento -->
+                        <div class="row g-5 mb-5 pb-4">
+                            <!-- Sezione Ingredienti -->
+                            <div class="col-12 col-lg-4" data-aos="fade-right">
+                                <h2 class="h4 fw-bold text-dark d-flex align-items-center gap-2 mb-4">
+                                    <span class="material-symbols-outlined custom-text-primary">shopping_basket</span>
+                                    Ingredienti
+                                </h2>
+                                <ul class="list-unstyled d-flex flex-column gap-3 m-0">
+                                    <% if (recipe.ingredients && recipe.ingredients.length> 0) { %>
+                                        <% recipe.ingredients.forEach(ing=> { %>
+                                            <li
+                                                class="d-flex align-items-center gap-3 p-3 bg-white border border-light rounded-3 shadow-sm">
+                                                <div class="ingredient-bullet"></div>
+                                                <span class="text-dark"><strong class="fw-bold">
+                                                        <%= ing.amount %>
+                                                    </strong> - <%= ing.name %></span>
+                                            </li>
+                                            <% }) %>
+                                                <% } else { %>
+                                                    <li class="text-secondary">Nessun ingrediente inserito.</li>
+                                                    <% } %>
+                                </ul>
+                            </div>
+
+                            <!-- Sezione Procedimento -->
+                            <div class="col-12 col-lg-8" data-aos="fade-left">
+                                <h2 class="h4 fw-bold text-dark d-flex align-items-center gap-2 mb-4">
+                                    <span
+                                        class="material-symbols-outlined custom-text-primary">format_list_numbered</span>
+                                    Procedimento
+                                </h2>
+                                <div class="d-flex flex-column gap-4">
+                                    <% if (recipe.instructions && recipe.instructions.length> 0) { %>
+                                        <% recipe.instructions.forEach(inst=> { %>
+                                            <div class="d-flex gap-3 gap-md-4 align-items-start">
+                                                <div class="instruction-number shadow-sm mt-1">
+                                                    <%= inst.step_number %>
+                                                </div>
+                                                <div class="pt-1">
+                                                    <p class="text-secondary m-0 lh-relaxed">
+                                                        <%= inst.description %>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <% }) %>
+                                                <% } else { %>
+                                                    <p class="text-secondary">Nessun passaggio inserito.</p>
+                                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Feedback della community -->
+                        <div class="border-top pt-5" data-aos="fade-up">
+                            <div class="row g-5">
+                                <!-- Elenco delle recensioni -->
+                                <div class="col-12 col-lg-6 col-xl-7">
+                                    <h2 class="h4 fw-bold text-dark mb-4">Recensioni degli utenti</h2>
+                                    <div class="d-flex flex-column gap-4">
+                                        <% if (reviews && reviews.length> 0) { %>
+                                            <% reviews.forEach(rev=> { %>
+                                                <div
+                                                    class="bg-white p-4 rounded-4 shadow-sm border border-light review-card">
+                                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                                        <div class="d-flex align-items-center gap-2">
+                                                            <div
+                                                                class="rounded-circle recipe-review-author-avatar <%= rev.author_role === 'admin' ? 'admin' : 'chef' %>">
+                                                            </div>
+                                                            <span class="fw-bold text-dark">
+                                                                <%= rev.author_name %>
+                                                            </span>
+                                                        </div>
+                                                        <div class="d-flex text-warning">
+                                                            <% for(let i=1; i<=5; i++) { %>
+                                                                <span
+                                                                    class="material-symbols-outlined fs-6 <%= i <= rev.rating ? 'fill-current' : '' %>">star</span>
+                                                                <% } %>
+                                                        </div>
+                                                    </div>
+                                                    <% if (rev.comment) { %>
+                                                        <p class="text-dark my-3 recipe-comment-text">
+                                                            "<%= rev.comment %>"
+                                                        </p>
+                                                        <% } %>
+                                                            <p class="small text-secondary mb-0">
+                                                                <%= new Date(rev.created_at).toLocaleDateString('it-IT')
+                                                                    %>
+                                                            </p>
+                                                </div>
+                                                <% }) %>
+                                                    <% } else { %>
+                                                        <p class="text-secondary">Nessuna recensione ancora. Sii il
+                                                            primo a votare!</p>
+                                                        <% } %>
+                                    </div>
+                                    <!-- Pagination Recensioni -->
+                                    <div id="pagination-reviews"
+                                        class="pagination-container d-flex justify-content-between align-items-center px-4 py-3 bg-white border border-light rounded-4 shadow-sm mt-4 d-none">
+                                        <div class="text-secondary small">
+                                            Pagina <span id="current-page-reviews" class="fw-bold text-dark">1</span> di
+                                            <span id="total-pages-reviews" class="fw-bold text-dark">1</span>
+                                        </div>
+                                        <div class="d-flex gap-2">
+                                            <button id="prev-reviews"
+                                                class="btn btn-sm btn-light border p-1 d-flex align-items-center justify-content-center btn-pag-hover"
+                                                disabled title="Pagina Precedente">
+                                                <span class="material-symbols-outlined fs-5">chevron_left</span>
+                                            </button>
+                                            <button id="next-reviews"
+                                                class="btn btn-sm btn-light border p-1 d-flex align-items-center justify-content-center btn-pag-hover"
+                                                title="Pagina Successiva">
+                                                <span class="material-symbols-outlined fs-5">chevron_right</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Modulo per lasciare un commento -->
+                                <div class="col-12 col-lg-6 col-xl-5">
+                                    <div
+                                        class="bg-white p-4 p-md-5 rounded-4 shadow-sm text-center border border-light">
+                                        <% if (user) { %>
+                                            <% if (user.id===recipe.author_id || user.role==='admin' ) { %>
+                                                <h2 class="h4 fw-bold text-dark mb-2">Gestione Ricetta</h2>
+                                                <p class="text-secondary mb-4">Visualizza il feedback degli altri utenti
+                                                    su questa creazione.</p>
+                                                <span
+                                                    class="material-symbols-outlined text-secondary opacity-50 display-1">restaurant_menu</span>
+                                                <% } else { %>
+                                                    <h2 class="h4 fw-bold text-dark mb-2">Valuta questa Ricetta</h2>
+                                                    <p class="text-secondary mb-2">Ti è piaciuta questa ricetta?</p>
+                                                    <form id="review-form" action="/ricette/<%= recipe.id %>/recensione"
+                                                        method="POST" class="d-flex flex-column align-items-center"
+                                                        novalidate>
+                                                        <div id="review-rating-alert"
+                                                            class="alert alert-warning w-100 mb-3 py-2 px-3 d-none d-flex align-items-center gap-2 review-alert-text"
+                                                            role="alert">
+                                                            <span class="material-symbols-outlined fs-6">warning</span>
+                                                            Seleziona almeno una stella prima di inviare il commento.
+                                                        </div>
+                                                        <div
+                                                            class="d-flex align-items-center gap-2 mb-3 text-secondary">
+                                                            <% for(let i=1; i<=5; i++) { %>
+                                                                <label class="star-label">
+                                                                    <input type="radio" name="rating" value="<%= i %>"
+                                                                        class="star-radio star-input" required>
+                                                                    <span
+                                                                        class="material-symbols-outlined star-icon-selectable star-icon">star</span>
+                                                                </label>
+                                                                <% } %>
+                                                        </div>
+                                                        <div class="w-100 mb-2">
+                                                            <textarea name="comment" id="reviewComment"
+                                                                class="form-control border-light shadow-none bg-light no-resize"
+                                                                rows="3"
+                                                                placeholder="Lascia un commento (max 500 caratteri)"
+                                                                maxlength="500"></textarea>
+                                                        </div>
+                                                        <button type="submit"
+                                                            class="btn btn-primary custom-btn-primary fw-bold px-4 py-2 w-100 shadow-btn">Invia
+                                                            Recensione</button>
+                                                    </form>
+                                                    <% } %>
+                                                        <% } else { %>
+                                                            <h2 class="h4 fw-bold text-dark mb-2">Valuta questa Ricetta
+                                                            </h2>
+                                                            <p class="text-secondary mb-4">Devi effettuare l'accesso per
+                                                                valutare la ricetta.</p>
+                                                            <a href="/login"
+                                                                class="btn btn-primary custom-btn-primary fw-bold px-4 py-2 mt-2 shadow-btn">Accedi</a>
+                                                            <% } %>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <% } %>
+            </div>
+            </div>
+
+            <% if (user && recipe && user.role !=='admin' ) { %>
+                <!-- Modale Salva in Raccolta-->
+                <div class="modal fade" id="modalRaccolte" tabindex="-1" aria-labelledby="modalRaccolteLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content border-0 shadow-lg rounded-4">
+                            <div class="modal-header border-0 pb-0 px-4 pt-4">
+                                <h5 class="modal-title fw-bold" id="modalRaccolteLabel">
+                                    <span
+                                        class="material-symbols-outlined align-middle me-2 custom-text-primary">bookmark</span>
+                                    Salva in una Raccolta
+                                </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Chiudi"></button>
+                            </div>
+                            <div class="modal-body px-4 py-3">
+                                <div id="modal-raccolta-feedback" class="alert d-none py-2 px-3 mb-3" role="alert">
+                                </div>
+
+                                <!-- Lista raccolte esistenti -->
+                                <div id="lista-raccolte-modal">
+                                    <% if (typeof raccolte !=='undefined' && raccolte && raccolte.length> 0) { %>
+                                        <p class="text-secondary small mb-3">Seleziona in quale raccolta salvare questa
+                                            ricetta:</p>
+                                        <div class="d-flex flex-column gap-2 mb-4">
+                                            <% raccolte.forEach(r=> { %>
+                                                <div
+                                                    class="d-flex align-items-center justify-content-between p-3 bg-light rounded-3 border border-light collection-modal-item">
+                                                    <div class="d-flex align-items-center gap-2">
+                                                        <span
+                                                            class="material-symbols-outlined fs-6 custom-text-primary">collections_bookmark</span>
+                                                        <span class="fw-semibold text-dark">
+                                                            <%= r.name %>
+                                                        </span>
+                                                    </div>
+                                                    <% if (r.ha_ricetta) { %>
+                                                        <button
+                                                            class="btn btn-sm btn-success-soft btn-raccolta-toggle fw-semibold d-flex align-items-center gap-1"
+                                                            data-collection-id="<%= r.id %>"
+                                                            data-recipe-id="<%= recipe.id %>" data-action="rimuovi">
+                                                            <span class="material-symbols-outlined fs-6">check</span>
+                                                            Aggiunta
+                                                        </button>
+                                                        <% } else { %>
+                                                            <button
+                                                                class="btn btn-sm btn-outline-primary fw-semibold d-flex align-items-center gap-1 btn-raccolta-toggle"
+                                                                data-collection-id="<%= r.id %>"
+                                                                data-recipe-id="<%= recipe.id %>"
+                                                                data-action="aggiungi">
+                                                                <span class="material-symbols-outlined fs-6">add</span>
+                                                                Salva
+                                                            </button>
+                                                            <% } %>
+                                                </div>
+                                                <% }) %>
+                                        </div>
+                                        <% } else { %>
+                                            <!-- Nessuna raccolta: prompt esplicito a crearne una -->
+                                            <div class="alert alert-warning bg-warning bg-opacity-10 border-warning border-opacity-25 d-flex gap-2 align-items-start py-3 px-3 mb-4"
+                                                role="alert">
+                                                <span
+                                                    class="material-symbols-outlined text-warning flex-shrink-0 mt-1">info</span>
+                                                <div>
+                                                    <p class="fw-semibold text-dark mb-1 small">Nessuna raccolta ancora!
+                                                    </p>
+                                                    <p class="text-secondary small mb-0">Per salvare questa ricetta devi
+                                                        prima creare almeno una raccolta usando il modulo qui sotto.</p>
+                                                </div>
+                                            </div>
+                                            <% } %>
+                                </div>
+
+                                <!-- Crea nuova raccolta inline -->
+                                <div class="border-top pt-3">
+                                    <p class="fw-semibold text-dark small mb-2">
+                                        <span
+                                            class="material-symbols-outlined fs-6 align-middle me-1 custom-text-primary">add_circle</span>
+                                        Crea una nuova raccolta:
+                                    </p>
+                                    <div class="d-flex gap-2">
+                                        <input type="text" id="nuova-raccolta-nome"
+                                            class="form-control form-control-sm border-light bg-light shadow-none"
+                                            placeholder="Nome raccolta..." maxlength="100">
+                                        <button id="btn-crea-raccolta-modal"
+                                            class="btn btn-sm btn-primary custom-btn-primary fw-bold px-3 flex-shrink-0"
+                                            data-recipe-id="<%= recipe.id %>">
+                                            Crea e Salva
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer border-0 px-4 pb-4 pt-1">
+                                <a href="/raccolte"
+                                    class="btn btn-light border fw-semibold d-flex align-items-center gap-2">
+                                    <span class="material-symbols-outlined fs-6">collections_bookmark</span>
+                                    Gestisci raccolte
+                                </a>
+                                <button type="button" class="btn btn-primary custom-btn-primary fw-bold ms-auto"
+                                    data-bs-dismiss="modal">Chiudi</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <% } %>
+        </main>
+
+        <%- include('partials/footer') %>
+            <%- include('partials/scripts') %>
+                <script type="module" src="/js/recipe.js"></script>
+                <% if (user && recipe && user.id !==recipe.author_id && user.role !=='admin' ) { %>
+                    <script type="module" src="/js/collection-recipe.js"></script>
+                    <% } %>
+</body>
+
+</html>

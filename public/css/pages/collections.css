@@ -1,0 +1,83 @@
+/* Icona per raccolte vuote */
+.collections-empty-icon {
+    font-size: 5rem;
+    display: block;
+}
+
+/* Card della raccolta */
+.collection-card {
+    position: relative;
+    background: #fff;
+    border-radius: 18px;
+    border: 1px solid rgba(0,0,0,0.07);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+
+/* Hover sulla card della raccolta */
+.collection-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+}
+
+/* Barra colorata superiore della card */
+.collection-card-bg {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, var(--color-primary, #e8732a) 0%, #ff9a5c 100%);
+}
+
+/* Corpo della card della raccolta */
+.collection-card-body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding-top: 1.8rem;
+}
+
+/* Badge numero ricette salvate */
+.collection-count-badge {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-primary, #e8732a);
+    background: #fff3ec;
+    padding: 4px 10px;
+    border-radius: 20px;
+    flex-shrink: 0;
+}
+
+/* Titolo della raccolta */
+.collection-name {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 0.4rem;
+    line-height: 1.3;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+/* Data creazione della raccolta */
+.collection-date {
+    font-size: 0.78rem;
+    color: #adb5bd;
+    margin-bottom: 0;
+}
+
+/* Hover pulsante elimina */
+.btn-danger-hover:hover {
+    background: #fff0f0 !important;
+    border-color: #f8d7da !important;
+}
+
+/* Bordo tratteggiato in caso nessuna raccolta */
+.border-dashed {
+    border: 1px dashed #dee2e6 !important;
+}

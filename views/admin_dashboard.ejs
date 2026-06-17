@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Admin Dashboard - Il Ricettario</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/partials/base_style.css">
+    <link rel="stylesheet" href="/css/partials/navbar.css">
+
+    <link rel="stylesheet" href="/css/partials/footer.css">
+    <link rel="stylesheet" href="/css/pages/admin_dashboard.css">
+</head>
+
+<body class="d-flex flex-column min-vh-100 bg-light">
+    <%- include('partials/navbar') %>
+
+        <main id="main-content" class="flex-grow-1 py-4 py-md-5 px-3">
+
+            <div class="container-fluid admin-dashboard-container">
+
+                <!-- Intestazione della Dashboard -->
+                <div class="mb-2" data-aos="fade-up">
+                    <h1 class="h2 fw-bold text-dark mb-2">Pannello di controllo</h1>
+                </div>
+
+                <hr class="border-secondary-subtle mb-4">
+
+                <div class="row g-4" data-aos="fade-up">
+                    <!-- Gestione delle Ricette pubblicate -->
+                    <div class="col-12 col-xl-6">
+                        <div
+                            class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center mb-3 gap-3">
+                            <h2 class="h5 fw-bold text-dark m-0">Ricette Pubblicate</h2>
+                            <div class="input-group search-container admin-search-container">
+                                <span class="input-group-text bg-white text-muted border-end-0 ps-3"><span
+                                        class="material-symbols-outlined fs-5">search</span></span>
+                                <input class="form-control border-start-0 ps-2 shadow-none py-2" id="search-recipes"
+                                    placeholder="Cerca ricette..." type="text" />
+                            </div>
+                        </div>
+
+                        <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0 align-middle">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th
+                                                class="text-secondary small fw-bold text-uppercase border-bottom-0 py-3 px-4 admin-table-header">
+                                                Titolo</th>
+                                            <th
+                                                class="text-secondary small fw-bold text-uppercase border-bottom-0 py-3 px-4 admin-table-header">
+                                                Stato</th>
+                                            <th class="text-end border-bottom-0 py-3 px-4 admin-table-header"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% if (recipes && recipes.length> 0) { %>
+                                            <% recipes.forEach(recipe=> { %>
+                                                <tr class="recipe-row bg-white transition-bg border-bottom"
+                                                    id="recipe-row-<%= recipe.id %>">
+                                                    <td class="py-3 px-4 admin-table-cell">
+                                                        <div class="fw-bold text-dark text-truncate">
+                                                            <%= recipe.title %>
+                                                        </div>
+                                                        <div class="text-secondary small mt-1 text-truncate">
+                                                            <%= recipe.author_name %>
+                                                        </div>
+                                                    </td>
+                                                    <td class="py-3 px-4">
+                                                        <span
+                                                            class="badge rounded-pill fw-medium py-2 px-3 recipe-status-badge <%= recipe.is_banned ? 'bg-danger bg-opacity-10 text-danger' : 'bg-success bg-opacity-10 text-success' %>">
+                                                            <%= recipe.is_banned ? 'Bannata' : 'Attiva' %>
+                                                        </span>
+                                                        <div id="ban-badge-<%= recipe.id %>" class="mt-1">
+                                                            <% if (recipe.is_banned) { %>
+                                                                <span
+                                                                    class="badge rounded-pill bg-danger border border-danger px-2 py-1">BANNATA</span>
+                                                                <% } %>
+                                                        </div>
+                                                    </td>
+                                                    <td class="py-3 px-4 text-end">
+                                                        <div class="d-flex justify-content-end gap-2">
+                                                            <a href="/ricette/<%= recipe.id %>"
+                                                                class="btn btn-sm btn-light border d-inline-flex align-items-center justify-content-center p-2 text-primary bg-primary bg-opacity-10 admin-btn-hover"
+                                                                title="Vedi Ricetta" target="_blank">
+                                                                <span
+                                                                    class="material-symbols-outlined fs-6">visibility</span>
+                                                            </a>
+                                                            <form action="/ricette/<%= recipe.id %>/toggle-ban"
+                                                                method="POST" class="m-0 admin-recipe-ban-form">
+                                                                <button type="submit"
+                                                                    class="btn btn-sm btn-light border d-inline-flex align-items-center justify-content-center p-2 admin-btn-hover <%= recipe.is_banned ? 'bg-danger bg-opacity-10 text-danger border-danger' : 'text-secondary' %>"
+                                                                    title="<%= recipe.is_banned ? 'Sblocca' : 'Blocca' %> Ricetta">
+                                                                    <span class="material-symbols-outlined fs-6">
+                                                                        <%= recipe.is_banned ? 'lock_open' : 'block' %>
+                                                                    </span>
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <% }) %>
+                                                    <% } else { %>
+                                                        <tr>
+                                                            <td colspan="3" class="text-center py-5 text-secondary">
+                                                                Nessuna ricetta trovata.</td>
+                                                        </tr>
+                                                        <% } %>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Pagination Ricette -->
+                            <div
+                                class="pagination-container d-flex justify-content-between align-items-center px-4 py-3 bg-white border-top">
+                                <div class="text-secondary small">
+                                    Pagina <span id="current-page-recipes" class="fw-bold text-dark">1</span> di <span
+                                        id="total-pages-recipes" class="fw-bold text-dark">1</span>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <button id="prev-recipes"
+                                        class="btn btn-sm btn-light border p-1 d-flex align-items-center justify-content-center admin-btn-hover"
+                                        disabled title="Pagina Precedente">
+                                        <span class="material-symbols-outlined fs-5">chevron_left</span>
+                                    </button>
+                                    <button id="next-recipes"
+                                        class="btn btn-sm btn-light border p-1 d-flex align-items-center justify-content-center admin-btn-hover"
+                                        title="Pagina Successiva">
+                                        <span class="material-symbols-outlined fs-5">chevron_right</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gestione degli Utenti iscritti -->
+                    <div class="col-12 col-xl-6">
+                        <div
+                            class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center mb-3 gap-3">
+                            <h2 class="h5 fw-bold text-dark m-0">Utenti Registrati</h2>
+                            <div class="input-group search-container admin-search-container">
+                                <span class="input-group-text bg-white text-muted border-end-0 ps-3"><span
+                                        class="material-symbols-outlined fs-5">search</span></span>
+                                <input class="form-control border-start-0 ps-2 shadow-none py-2" id="search-users"
+                                    placeholder="Cerca utenti..." type="text" />
+                            </div>
+                        </div>
+
+                        <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0 align-middle">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th
+                                                class="text-secondary small fw-bold text-uppercase border-bottom-0 py-3 px-4 admin-table-header">
+                                                Utente</th>
+                                            <th
+                                                class="text-secondary small fw-bold text-uppercase border-bottom-0 py-3 px-4 admin-table-header">
+                                                Stato</th>
+                                            <th class="text-end border-bottom-0 py-3 px-4 admin-table-header"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% if (users && Array.isArray(users) && users.length> 0) { %>
+                                            <% users.forEach(user=> { %>
+                                                <tr class="user-row bg-white transition-bg border-bottom">
+                                                    <td class="py-3 px-4 admin-table-cell">
+                                                        <div class="d-flex align-items-center gap-3">
+                                                            <img src="<%= AiutiCard.getImmagineProfilo(user.role) %>"
+                                                                class="rounded-circle border admin-avatar" width="32"
+                                                                height="32">
+                                                            <div class="text-truncate">
+                                                                <div class="fw-bold text-dark">
+                                                                    <%= user.full_name %>
+                                                                </div>
+                                                                <div class="text-secondary small mt-1">
+                                                                    <%= user.email %>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="py-3 px-4">
+                                                        <span
+                                                            class="badge rounded-pill fw-medium py-2 px-3 user-status-badge <%= user.is_banned ? 'bg-danger bg-opacity-10 text-danger' : 'bg-success bg-opacity-10 text-success' %>">
+                                                            <%= user.is_banned ? 'Bannato' : 'Attivo' %>
+                                                        </span>
+                                                        <div id="ban-badge-user-<%= user.id %>" class="mt-1">
+                                                            <% if (user.is_banned) { %>
+                                                                <span
+                                                                    class="badge rounded-pill bg-danger border border-danger px-2 py-1">BANNATO</span>
+                                                                <% } %>
+                                                        </div>
+                                                    </td>
+                                                    <td class="py-3 px-4 text-end">
+                                                        <div class="d-flex justify-content-end gap-2">
+                                                            <% if (user.role !=='admin' ) { %>
+                                                                <form action="/utenti/<%= user.id %>/toggle-ban"
+                                                                    method="POST" class="m-0 admin-user-ban-form">
+                                                                    <button type="submit"
+                                                                        class="btn btn-sm btn-light border d-inline-flex align-items-center justify-content-center p-2 admin-btn-hover <%= user.is_banned ? 'bg-danger bg-opacity-10 text-danger border-danger' : 'text-secondary' %>"
+                                                                        title="<%= user.is_banned ? 'Sblocca' : 'Blocca' %> Utente">
+                                                                        <span class="material-symbols-outlined fs-6">
+                                                                            <%= user.is_banned ? 'lock_open' : 'block'
+                                                                                %>
+                                                                        </span>
+                                                                    </button>
+                                                                </form>
+                                                                <% } %>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <% }) %>
+                                                    <% } else { %>
+                                                        <tr>
+                                                            <td colspan="3" class="text-center py-5 text-secondary">
+                                                                Nessun utente trovato.</td>
+                                                        </tr>
+                                                        <% } %>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Pagination Utenti -->
+                            <div
+                                class="pagination-container d-flex justify-content-between align-items-center px-4 py-3 bg-white border-top">
+                                <div class="text-secondary small">
+                                    Pagina <span id="current-page-users" class="fw-bold text-dark">1</span> di <span
+                                        id="total-pages-users" class="fw-bold text-dark">1</span>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <button id="prev-users"
+                                        class="btn btn-sm btn-light border p-1 d-flex align-items-center justify-content-center admin-btn-hover"
+                                        disabled title="Pagina Precedente">
+                                        <span class="material-symbols-outlined fs-5">chevron_left</span>
+                                    </button>
+                                    <button id="next-users"
+                                        class="btn btn-sm btn-light border p-1 d-flex align-items-center justify-content-center admin-btn-hover"
+                                        title="Pagina Successiva">
+                                        <span class="material-symbols-outlined fs-5">chevron_right</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <%- include('partials/footer') %>
+            <%- include('partials/scripts') %>
+                <script type="module" src="/js/admin-dashboard.js"></script>
+</body>
+
+</html>

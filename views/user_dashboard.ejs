@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Chef Dashboard - Il Ricettario</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="/css/partials/recipe-card.css">
+    <link rel="stylesheet" href="/css/partials/base_style.css">
+    <link rel="stylesheet" href="/css/partials/navbar.css">
+
+    <link rel="stylesheet" href="/css/partials/footer.css">
+    <link rel="stylesheet" href="/css/pages/user_dashboard.css">
+</head>
+
+<body class="d-flex flex-column min-vh-100 bg-light">
+
+        <%- include('partials/navbar') %>
+
+            <main id="main-content" class="flex-grow-1 py-4 py-md-5 px-3">
+
+                <div class="container dashboard-container">
+                    <!-- Benvenuto dello Chef e tasto per creare -->
+                    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-5"
+                        data-aos="fade-up">
+                        <div>
+
+                                <h1 class="h2 fw-bold text-dark mb-2 ls-tight">
+                                    <%= _saluto %>, <%= user.full_name %>!
+                                </h1>
+                                <p class="text-secondary mb-0">Ecco un riepilogo delle tue ricette.</p>
+                        </div>
+                        <a href="/ricette/creaRicetta"
+                            class="btn btn-primary custom-btn-primary fw-bold px-4 py-2 d-inline-flex gap-2 align-items-center shadow-btn text-white">
+                            <span class="material-symbols-outlined fs-5">add</span>
+                            <span>Crea Nuova Ricetta</span>
+                        </a>
+                    </div>
+
+                    <!-- Pannello delle statistiche personali -->
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-5">
+                        <div class="col" data-aos="fade-up" data-aos-delay="0">
+                            <div
+                                class="card shadow-sm border border-light rounded-4 p-4 h-100 stat-card-hover text-bg-white">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <span class="material-symbols-outlined fs-4 stat-icon-primary">restaurant_menu</span>
+                                </div>
+                                <p class="text-secondary small fw-bold text-uppercase mb-1 ls-mid">Ricette Totali</p>
+                                <h3 class="display-6 fw-bold text-dark m-0" id="stat-total-recipes">
+                                    <%= recipes ? recipes.length : 0 %>
+                                </h3>
+                            </div>
+                        </div>
+
+                        <div class="col" data-aos="fade-up" data-aos-delay="100">
+                            <div
+                                class="card shadow-sm border border-light rounded-4 p-4 h-100 stat-card-hover text-bg-white">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <span class="material-symbols-outlined fs-4 stat-icon-primary">bookmark</span>
+                                </div>
+                                <p class="text-secondary small fw-bold text-uppercase mb-1 ls-mid">Salvataggi Totali</p>
+                                <h3 class="display-6 fw-bold text-dark m-0">
+                                    <%= _stats.saved_count || 0 %>
+                                </h3>
+                            </div>
+                        </div>
+
+                        <div class="col" data-aos="fade-up" data-aos-delay="200">
+                            <div
+                                class="card shadow-sm border border-light rounded-4 p-4 h-100 stat-card-hover text-bg-white">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <span class="material-symbols-outlined fs-4 stat-icon-primary">star</span>
+                                    <span
+                                        class="badge rounded-pill bg-secondary bg-opacity-10 text-secondary fw-bold px-2 py-1">Valut.
+                                        Media</span>
+                                </div>
+                                <p class="text-secondary small fw-bold text-uppercase mb-1 ls-mid">Voto Community</p>
+                                <h3 class="display-6 fw-bold text-dark m-0">
+                                    <%= _stats.avg_rating ? _stats.avg_rating + '/5' : 'N/A' %>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Elenco delle ricette create dallo Chef -->
+                    <div data-aos="fade-up">
+                        <h2 class="h4 fw-bold text-dark mb-4">Le tue Ricette Recenti</h2>
+                        <div id="recipes-grid" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 pt-2">
+                            <% if (recipes && recipes.length> 0) { %>
+                                <% recipes.forEach(recipe=> { %>
+                                    <div class="col">
+                                        <%- include('partials/recipe-card', { recipe: { ...recipe, author_role: user.role }, showActions: true }) %>
+                                    </div>
+                                    <% }) %>
+                                        <% } else { %>
+                                            <div class="col-12 w-100">
+                                                <div class="text-center bg-white border-dashed rounded-4 py-5 px-4 d-flex flex-column align-items-center justify-content-center dashboard-empty-state">
+                                                    <p class="text-secondary mb-3">Non hai ancora creato nessuna
+                                                        ricetta.</p>
+                                                    <a href="/ricette/creaRicetta"
+                                                        class="fw-bold custom-text-primary text-decoration-underline auth-link-hover">Crea
+                                                        La Tua Prima Ricetta</a>
+                                                </div>
+                                            </div>
+                                            <% } %>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <%- include('partials/footer') %>
+            <%- include('partials/scripts') %>
+            <script type="module" src="/js/user-dashboard.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,5 @@
+/* Foto del team a dimensioni fisse */
+.presentation-team-img {
+    object-fit: cover;
+    height: 300px;
+}

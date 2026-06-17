@@ -1,0 +1,170 @@
+/* Riempimento icone Material Symbols */
+.fill-current {
+  font-variation-settings: 'FILL' 1 !important;
+}
+
+/* Stato salvato/preferito attivo */
+.active-saved {
+  color: var(--color-primary) !important;
+}
+
+/* Colore primario evidenziato */
+.custom-text-primary {
+  color: var(--color-primary) !important;
+}
+
+/* Ombra sui bottoni ricetta */
+.shadow-btn {
+  box-shadow: 0 4px 14px 0 rgba(107, 143, 36, 0.12) !important;
+}
+
+/* Transizione pulsanti azione */
+.btn-edit-hover, .btn-danger-hover {
+  transition: all var(--transition-fast, 0.3s) ease !important;
+}
+
+/* Hover pulsante elimina */
+.btn-danger-hover:hover {
+  background-color: rgba(220, 38, 38, 0.1) !important;
+  border-color: #dc2626 !important;
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.15) !important;
+}
+
+/* Hover pulsanti paginazione */
+.btn-pag-hover:hover:not(:disabled) {
+  background-color: #f1f5f9 !important;
+  transform: translateY(-1px);
+}
+
+/* Hover pulsante modifica */
+.btn-edit-hover:hover {
+  background-color: rgba(107, 143, 36, 0.1) !important;
+  border-color: var(--color-primary) !important;
+  box-shadow: 0 4px 12px rgba(107, 143, 36, 0.15) !important;
+}
+
+/* Hover sui tag delle ricette */
+.tag-custom:hover {
+  background-color: var(--color-primary) !important;
+  color: #fff !important;
+  border-color: var(--color-primary) !important;
+}
+
+/* Cerchio numerato del passaggio */
+.instruction-number {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  width: 32px;
+  border-radius: 50%;
+  background-color: var(--color-primary);
+  color: #fff;
+  font-weight: 700;
+}
+
+/* Pallino elenco ingredienti */
+.ingredient-bullet {
+  height: 8px;
+  width: 8px;
+  border-radius: 50%;
+  background-color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+/* Nasconde radio button per le stelle */
+.star-radio {
+  display: none;
+}
+
+/* Cursore sulle etichette delle stelle */
+.star-label {
+  cursor: pointer;
+}
+
+/* Dimensione icone stelle */
+.star-icon-selectable {
+  font-size: 40px;
+  transition: color var(--transition-fast, 0.3s ease);
+}
+
+/* Colore stella attiva */
+.star-attiva {
+  color: #fbbf24 !important;
+  font-variation-settings: 'FILL' 1 !important;
+}
+
+/* Hover e selezione stelle a cascata */
+.star-label:hover .star-icon-selectable,
+.star-radio:checked~.star-icon-selectable {
+  color: #fbbf24;
+  font-variation-settings: "FILL" 1;
+}
+
+/* Contenitore principale ricetta */
+.recipe-container {
+  max-width: 1200px;
+}
+
+/* Icona errore ricetta */
+.recipe-error-icon {
+  font-size: 64px;
+}
+
+/* Contenitore testo errore */
+.recipe-error-text-container {
+  max-width: 400px;
+}
+
+/* Bottone per salvare la ricetta */
+.recipe-save-btn {
+  width: 40px;
+  height: 40px;
+}
+
+/* Avatar autore ricetta */
+.recipe-author-avatar {
+  width: 48px;
+  height: 48px;
+  background-size: cover;
+  border-width: 2px !important;
+  border-color: #6b8f24 !important;
+}
+
+/* Contenitore icona bevanda */
+.recipe-suggested-drink-icon-container {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+}
+
+/* Testo del commento */
+.recipe-comment-text {
+  line-height: 1.5;
+  font-style: italic;
+}
+
+/* Avatar recensione utente */
+.recipe-review-author-avatar {
+  width: 32px;
+  height: 32px;
+  background-size: cover;
+}
+
+/* Testo dell'avviso recensione */
+.review-alert-text {
+  font-size: 0.875rem;
+}
+
+/* Avatar autore admin */
+.recipe-author-avatar.admin,
+.recipe-review-author-avatar.admin {
+  background-image: url('/images/admin.png');
+}
+
+/* Avatar autore chef */
+.recipe-author-avatar.chef,
+.recipe-review-author-avatar.chef {
+  background-image: url('/images/chef_hat.png');
+}

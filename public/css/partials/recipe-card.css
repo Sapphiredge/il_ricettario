@@ -1,0 +1,102 @@
+/* Transizione ombra card */
+.recipe-card-hover {
+  transition: box-shadow var(--transition-fast, 0.3s ease);
+}
+
+/* Hover ombra card */
+.recipe-card-hover:hover {
+  box-shadow: var(--shadow-md, 0 4px 6px rgba(0, 0, 0, 0.07)) !important;
+}
+
+/* Transizione zoom immagine */
+.recipe-img-zoom {
+  transition: transform 0.5s ease;
+}
+
+/* Hover zoom immagine */
+.recipe-card-hover:hover .recipe-img-zoom {
+  transform: scale(1.05);
+}
+
+/* Hover overlay scuro su immagine */
+.recipe-card-hover:hover .recipe-overlay-hover {
+  opacity: 1 !important;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.4), transparent) !important;
+}
+
+/* Hover sul titolo della ricetta */
+.recipe-title-hover:hover {
+  color: var(--color-primary) !important;
+}
+
+/* Hover pulsanti icona (preferiti/raccolte) */
+.recipe-btn-icon-hover:hover {
+  color: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
+  background-color: white !important;
+}
+
+/* Hover pulsante elimina */
+.recipe-btn-danger-hover:hover {
+  color: #f87171 !important;
+  border-color: #f87171 !important;
+  background-color: rgba(239, 68, 68, 0.1) !important;
+}
+
+/* Opacità badge card */
+.recipe-card-badge {
+    opacity: 0.9;
+}
+
+/* Angoli arrotondati badge voto */
+.recipe-card-rating-badge {
+    border-radius: 6px;
+}
+
+/* Proporzioni avatar autore card */
+.recipe-card-author-avatar {
+    object-fit: cover;
+}
+
+/* Dimensione icone piccole */
+.recipe-card-icon-small {
+    font-size: 14px;
+}
+
+/* Stella piena nelle valutazioni */
+.recipe-card-icon-star {
+    font-size: 16px;
+    font-variation-settings: 'FILL' 1;
+}
+
+/* Dimensione testo valutazione */
+.recipe-card-rating-text {
+    font-size: 0.8rem;
+}
+
+/* Dimensione titolo ricetta card */
+.recipe-card-title {
+    font-size: 1.125rem;
+}
+
+/* Badge con effetto sfocatura */
+.recipe-card-glass-badge {
+    backdrop-filter: blur(4px);
+    font-size: 0.75rem;
+}
+
+/* Contenitore principale card */
+.recipe-card-main {
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+/* Altezza immagine per uniformità feed */
+.recipe-card-img-container {
+    height: 192px;
+}
+
+/* Transizione overlay */
+.recipe-card-overlay {
+    transition: opacity 0.3s ease;
+}

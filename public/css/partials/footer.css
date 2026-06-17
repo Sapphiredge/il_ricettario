@@ -1,0 +1,15 @@
+/* Transizione link nel footer */
+.footer-link-hover {
+  color: var(--text-secondary-dark) !important;
+  transition: color var(--transition-fast, 0.3s ease);
+}
+
+/* Colore primario icone footer */
+.footer-icon {
+  color: var(--color-primary) !important;
+}
+
+/* Hover link nel footer */
+.footer-link-hover:hover {
+  color: var(--color-primary) !important;
+}

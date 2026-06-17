@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ricerca <%= query ? '- ' + query : '' %> - Il Ricettario</title>
+    <meta name="description"
+        content="Cerca ricette per nome, ingrediente o usa i filtri avanzati per categoria, cottura e allergie.">
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="/css/partials/recipe-card.css">
+    <link rel="stylesheet" href="/css/partials/base_style.css">
+    <link rel="stylesheet" href="/css/partials/navbar.css">
+    <link rel="stylesheet" href="/css/partials/footer.css">
+    <link rel="stylesheet" href="/css/pages/search.css">
+</head>
+
+<body class="d-flex flex-column min-vh-100 bg-light">
+    <%- include('partials/navbar') %>
+
+        <main id="main-content" class="flex-grow-1">
+            <div class="container py-4 py-md-5">
+
+                <!-- Header -->
+                <div class="mb-4" data-aos="fade-up">
+                    <a href="/"
+                        class="d-inline-flex align-items-center gap-1 text-decoration-none fw-semibold mb-3 custom-text-primary auth-link-hover text-secondary">
+                        <span class="material-symbols-outlined fs-5">arrow_back</span>
+                        Torna alla Home
+                    </a>
+                    <h1 class="h2 fw-bold text-dark mb-1">Ricerca Ricette</h1>
+                    <% const hasFiltriAttivi=(typeof filtri !=='undefined' ) && (filtri.category ||
+                        filtri.cooking_method || filtri.difficulty || (filtri.allergens_exclude &&
+                        filtri.allergens_exclude.length> 0)); %>
+                        <% if (query || hasFiltriAttivi) { %>
+                            <p class="text-secondary mb-1">
+                                <% if (query) { %>Hai cercato: <strong class="custom-text-primary">"<%= query %>
+                                            "</strong>
+                                    <% } %>
+                                        <% if (hasFiltriAttivi) { %><span
+                                                class="ms-2 badge bg-primary bg-opacity-10 text-primary fw-semibold">Filtri
+                                                attivi</span>
+                                            <% } %>
+                            </p>
+                            <p class="small text-secondary m-0">
+                                Trovate <strong>
+                                    <%= typeof recipes !=='undefined' && recipes ? recipes.length : 0 %>
+                                </strong> ricette.
+                            </p>
+                            <% } %>
+                </div>
+
+                <div class="row g-4 align-items-start">
+                    <!-- Colonna Filtri -->
+                    <div class="col-12 col-lg-3" data-aos="fade-right">
+                        <div class="filter-panel">
+                            <!-- Toggle mobile -->
+                            <button
+                                class="btn d-flex d-lg-none w-100 align-items-center justify-content-between fw-bold py-3 px-0 border-0 bg-transparent filter-mobile-toggle"
+                                type="button" data-bs-toggle="collapse" data-bs-target="#filtriCollapse"
+                                aria-expanded="false">
+                                <span class="d-flex align-items-center gap-2">
+                                    <span class="material-symbols-outlined fs-5">tune</span>
+                                    Filtri
+                                    <% if (hasFiltriAttivi) { %><span class="badge bg-primary rounded-pill">●</span>
+                                        <% } %>
+                                </span>
+                                <span class="material-symbols-outlined filter-chevron">expand_more</span>
+                            </button>
+
+                            <div class="collapse d-lg-block" id="filtriCollapse">
+                                <form id="form-ricerca-filtri" method="GET" action="/cerca">
+
+                                    <!-- Barra di ricerca nel pannello filtri -->
+                                    <div class="filter-section">
+                                        <div
+                                            class="input-group bg-white shadow-sm overflow-hidden search-wrapper-focus">
+                                            <span class="input-group-text bg-white border-0 text-secondary ps-3 pe-2">
+                                                <span class="material-symbols-outlined fs-5">search</span>
+                                            </span>
+                                            <input class="form-control border-0 shadow-none ps-2 py-2 bg-white"
+                                                placeholder="Cerca ricette" name="q" type="search"
+                                                value="<%= typeof query !== 'undefined' ? query : '' %>" />
+                                            <button class="btn btn-primary px-3 fw-bold custom-btn-primary"
+                                                type="submit">Cerca</button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Tipo di Piatto -->
+                                    <div class="filter-section">
+                                        <h6 class="filter-section-title">
+                                            <span class="material-symbols-outlined fs-6">restaurant_menu</span>
+                                            Tipo di Piatto
+                                        </h6>
+                                        <div class="filter-pills-group">
+                                            <% const categorie=['Antipasti', 'Primi' , 'Secondi' , 'Contorni' , 'Dolci'
+                                                , 'Condimenti' ]; categorie.forEach(cat=> {
+                                                const isActive = typeof filtri !== 'undefined' && filtri.category &&
+                                                filtri.category.toLowerCase() === cat.toLowerCase();
+                                                %>
+                                                <label class="filter-pill <%= isActive ? 'active' : '' %>">
+                                                    <input type="radio" name="category" value="<%= cat %>"
+                                                        class="d-none" <%=isActive ? 'checked' : '' %>>
+                                                    <%= cat %>
+                                                </label>
+                                                <% }); %>
+                                        </div>
+                                    </div>
+
+                                    <!-- Metodo di Cottura -->
+                                    <div class="filter-section">
+                                        <h6 class="filter-section-title">
+                                            <span class="material-symbols-outlined fs-6">outdoor_grill</span>
+                                            Metodo di Cottura
+                                        </h6>
+                                        <div class="filter-pills-group">
+                                            <% const cotture=['Forno', 'Padella' , 'Friggitrice' , 'Pentola' , 'Griglia'
+                                                , 'Nessuna cottura' ]; cotture.forEach(met=> {
+                                                const isActive = typeof filtri !== 'undefined' && filtri.cooking_method
+                                                && filtri.cooking_method.toLowerCase() === met.toLowerCase();
+                                                %>
+                                                <label class="filter-pill <%= isActive ? 'active' : '' %>">
+                                                    <input type="radio" name="cooking_method" value="<%= met %>"
+                                                        class="d-none" <%=isActive ? 'checked' : '' %>>
+                                                    <%= met %>
+                                                </label>
+                                                <% }); %>
+                                        </div>
+                                    </div>
+
+                                    <!-- Difficoltà -->
+                                    <div class="filter-section">
+                                        <h6 class="filter-section-title">
+                                            <span class="material-symbols-outlined fs-6">signal_cellular_alt</span>
+                                            Difficoltà
+                                        </h6>
+                                        <div class="filter-pills-group">
+                                            <% const difficolta=['Facile', 'Media' , 'Difficile' ];
+                                                difficolta.forEach(diff=> {
+                                                const isActive = typeof filtri !== 'undefined' && filtri.difficulty &&
+                                                filtri.difficulty.toLowerCase() === diff.toLowerCase();
+                                                %>
+                                                <label class="filter-pill <%= isActive ? 'active' : '' %>">
+                                                    <input type="radio" name="difficulty" value="<%= diff %>"
+                                                        class="d-none" <%=isActive ? 'checked' : '' %>>
+                                                    <%= diff %>
+                                                </label>
+                                                <% }); %>
+                                        </div>
+                                    </div>
+
+                                    <!-- Escludi Allergeni -->
+                                    <div class="filter-section">
+                                        <h6 class="filter-section-title">
+                                            <span class="material-symbols-outlined fs-6">warning</span>
+                                            Escludi Allergeni
+                                        </h6>
+                                        <p class="filter-allergen-hint">Le ricette contenenti questi ingredienti
+                                            verranno escluse dai risultati.</p>
+                                        <div class="filter-allergen-grid">
+                                            <% const allergeni=[ { key: 'glutine' , label: 'Glutine' }, {
+                                                key: 'lattosio' , label: 'Lattosio' }, { key: 'uova' , label: 'Uova' },
+                                                { key: 'pesce' , label: 'Pesce' }, { key: 'crostacei' ,
+                                                label: 'Crostacei' }, { key: 'arachidi' , label: 'Arachidi' }, {
+                                                key: 'soia' , label: 'Soia' }, { key: 'frutta_guscio' ,
+                                                label: 'Frutta a guscio' }, { key: 'sedano' , label: 'Sedano' }, {
+                                                key: 'senape' , label: 'Senape' }, { key: 'sesamo' , label: 'Sesamo' },
+                                                { key: 'solfiti' , label: 'Solfiti' }, { key: 'lupini' , label: 'Lupini'
+                                                }, { key: 'molluschi' , label: 'Molluschi' } ]; allergeni.forEach(all=>
+                                                {
+                                                const isChecked = typeof filtri !== 'undefined' &&
+                                                filtri.allergens_exclude && filtri.allergens_exclude.includes(all.key);
+                                                %>
+                                                <label class="filter-allergen-label <%= isChecked ? 'active' : '' %>">
+                                                    <input type="checkbox" name="allergens" value="<%= all.key %>"
+                                                        class="d-none" <%=isChecked ? 'checked' : '' %>>
+                                                    <span class="filter-allergen-name">
+                                                        <%= all.label %>
+                                                    </span>
+                                                </label>
+                                                <% }); %>
+                                        </div>
+                                    </div>
+
+                                    <!-- Bottoni Azioni -->
+                                    <div class="filter-actions">
+                                        <button type="submit"
+                                            class="btn btn-primary custom-btn-primary fw-bold w-100 d-flex align-items-center justify-content-center gap-2">
+                                            <span class="material-symbols-outlined fs-6">search</span>
+                                            Applica Filtri
+                                        </button>
+                                        <a href="/cerca"
+                                            class="btn btn-light border fw-semibold w-100 d-flex align-items-center justify-content-center gap-2">
+                                            <span class="material-symbols-outlined fs-6">close</span>
+                                            Azzera
+                                        </a>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Colonna Risultati -->
+                    <div class="col-12 col-lg-9" data-aos="fade-left">
+                        <% if (typeof recipes !=='undefined' && recipes && recipes.length> 0) { %>
+                            <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
+                                <% recipes.forEach(recipe=> { %>
+                                    <div class="col">
+                                        <%- include('partials/recipe-card', { recipe, showDescription: true }) %>
+                                    </div>
+                                    <% }) %>
+                            </div>
+                            <% } else { %>
+                                <div
+                                    class="text-center bg-white border-dashed rounded-4 py-5 px-4 h-100 d-flex flex-column align-items-center justify-content-center">
+                                    <span
+                                        class="material-symbols-outlined text-secondary mb-3 icon-xl">search_off</span>
+                                    <% if (query || hasFiltriAttivi) { %>
+                                        <h2 class="h5 fw-bold text-dark mb-2">Nessuna ricetta trovata</h2>
+                                        <p class="text-secondary mx-auto mb-4" style="max-width:350px">
+                                            Nessun risultato con i criteri selezionati. Prova a modificare i filtri o la
+                                            parola chiave.
+                                        </p>
+                                        <a href="/cerca"
+                                            class="btn btn-primary custom-btn-primary fw-bold px-4 py-2">Azzera
+                                            filtri</a>
+                                        <% } else { %>
+                                            <h2 class="h5 fw-bold text-dark mb-2">Inizia la ricerca</h2>
+                                            <p class="text-secondary mx-auto mb-0" style="max-width:350px">
+                                                Usa la barra di ricerca o i filtri a sinistra per trovare la ricetta
+                                                perfetta.
+                                            </p>
+                                            <% } %>
+                                </div>
+                                <% } %>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <%- include('partials/footer') %>
+            <%- include('partials/scripts') %>
+                <script type="module" src="/js/search-filters.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,49 @@
+/* Input personalizzato */
+.custom-input {
+  border-color: var(--border-color, #dee2e6) !important;
+  transition: all var(--transition-fast, 0.3s ease) !important;
+}
+
+/* Focus su input personalizzato */
+.custom-input:focus,
+.input-group:focus-within .custom-input {
+  border-color: var(--color-primary) !important;
+  box-shadow: 0 0 0 3px rgba(107, 143, 36, 0.15) !important;
+}
+
+/* Hover link di autenticazione o navigazione */
+.auth-link-hover:hover {
+  color: var(--color-primary) !important;
+  text-decoration: none !important;
+}
+
+/* Testo secondario scuro */
+.custom-text-secondary {
+  color: var(--text-secondary-dark, #64748b) !important;
+}
+
+/* Hover pulsante elimina */
+.btn-danger-hover:hover {
+  background-color: rgba(220, 38, 38, 0.1) !important;
+  border-color: rgba(220, 38, 38, 0.2) !important;
+}
+
+/* Ombra pulsante principale */
+.shadow-btn {
+  box-shadow: 0 4px 14px 0 rgba(107, 143, 36, 0.25) !important;
+}
+
+/* Pulsante outline verde */
+.btn-custom-outline {
+  background-color: rgb(255, 255, 255) !important;
+  color: #6b8f24 !important;
+  border-color: #6b8f24 !important;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Hover pulsante outline verde */
+.btn-custom-outline:hover {
+  background-color: #6b8f24 !important;
+  color: #ffffff !important;
+  border-color: #6b8f24 !important;
+}

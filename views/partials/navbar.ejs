@@ -1,0 +1,94 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top border-bottom py-2 shadow-sm" data-aos="fade-left"
+    data-aos-duration="600">
+    <div class="container-fluid px-4 px-lg-5 position-relative">
+        <a class="navbar-brand d-flex align-items-center gap-2" href="/">
+            <div class="brand-icon d-flex align-items-center">
+                <span class="material-symbols-outlined fs-2">menu_book</span>
+            </div>
+            <h2 class="brand-title m-0 fw-bold fs-5 text-dark">Il Ricettario</h2>
+        </a>
+
+        <!-- Contenitore Azioni Utente e Toggler (Visualizzato a destra su mobile) -->
+        <div class="d-flex align-items-center gap-2 ms-auto order-lg-last">
+            <% if (user) { %>
+                <div class="dropdown">
+                    <a class="nav-link dropdown-toggle d-flex align-items-center gap-2 text-dark p-0"
+                        href="#" id="userDropdown" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <img src="<%= AiutiCard.getImmagineProfilo(user.role) %>" alt="User Avatar"
+                            loading="lazy"
+                            class="rounded-circle shadow-sm border border-light bg-white navbar-user-avatar">
+                        <span class="fw-bold d-none d-lg-inline">
+                            <%= user.full_name %>
+                        </span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-3"
+                        aria-labelledby="userDropdown">
+                        <% if (user.role==='admin' ) { %>
+                            <li><a class="dropdown-item d-flex align-items-center gap-2 py-2"
+                                    href="/admin/dashboard"><span
+                                        class="material-symbols-outlined fs-5">admin_panel_settings</span>
+                                    Dashboard Admin</a></li>
+                            <% } else { %>
+                                <li><a class="dropdown-item d-flex align-items-center gap-2 py-2"
+                                        href="/chef/dashboard"><span
+                                            class="material-symbols-outlined fs-5">restaurant_menu</span>
+                                        Le mie ricette</a></li>
+                                <li><a class="dropdown-item d-flex align-items-center gap-2 py-2"
+                                        href="/raccolte"><span
+                                            class="material-symbols-outlined fs-5">collections_bookmark</span>
+                                        Le mie Raccolte</a></li>
+                                <% } %>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item d-flex align-items-center gap-2 py-2 text-danger"
+                                            href="/logout"><span
+                                                class="material-symbols-outlined fs-5">logout</span>
+                                            Esci</a></li>
+                    </ul>
+                </div>
+                <% } else { %>
+                    <!-- Login Rapido su Desktop, solo icona su mobile? Inseriamo nel menu drop per ora -->
+                    <div class="d-none d-lg-flex gap-2">
+                        <a class="btn btn-sm btn-outline-primary border-2 custom-btn-outline fw-bold px-3" href="/login">Login</a>
+                        <a class="btn btn-sm btn-primary text-white custom-btn-primary fw-bold px-3" href="/registrazione">Registrati</a>
+                    </div>
+                <% } %>
+
+            <!-- Pulsante Hamburger (Toggler) -->
+            <button class="navbar-toggler border-0 shadow-none p-1 ms-2" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+
+        <!-- Elementi Collassabili (Ricerca e Link aggiuntivi su mobile) -->
+        <div class="collapse navbar-collapse" id="navbarContent">
+            <% if (typeof currentPage==='undefined' || (currentPage !== '/' && currentPage !== '/cerca')) { %>
+                <form class="d-flex justify-content-center my-3 my-lg-0 px-lg-4 <%= currentPage !== '/' ? 'navbar-search-desktop-centered' : '' %>"
+                    action="/cerca" method="GET">
+                    <div class="input-group navbar-search-group shadow-sm overflow-hidden bg-light search-wrapper-focus">
+                        <span class="input-group-text bg-light border-0 text-secondary ps-3 pe-2">
+                            <span class="material-symbols-outlined fs-5">search</span>
+                        </span>
+                        <input class="form-control border-0 shadow-none ps-2 py-2 bg-light"
+                            placeholder="Cerca ricette..." name="q" type="search" />
+                        <button class="btn btn-primary px-3 fw-bold custom-btn-primary" type="submit">Cerca</button>
+                    </div>
+                </form>
+            <% } %>
+            
+            <!-- Link di Login/Registrazione visibili SOLO nel menu a tendina su mobile -->
+            <% if (!user) { %>
+                <div class="d-lg-none mt-3 pb-2 border-top pt-3">
+                    <div class="d-grid gap-2">
+                        <a class="btn btn-outline-primary custom-btn-outline fw-bold" href="/login">Accedi</a>
+                        <a class="btn btn-primary text-white custom-btn-primary fw-bold" href="/registrazione">Crea Account</a>
+                    </div>
+                </div>
+            <% } %>
+        </div>
+    </div>
+</nav>

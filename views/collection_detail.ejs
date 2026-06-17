@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title><%= raccolta.name %> - Le mie Raccolte - Il Ricettario</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="/css/partials/recipe-card.css">
+    <link rel="stylesheet" href="/css/partials/base_style.css">
+    <link rel="stylesheet" href="/css/partials/navbar.css">
+    <link rel="stylesheet" href="/css/partials/footer.css">
+    <link rel="stylesheet" href="/css/pages/collection_detail.css">
+</head>
+
+<body class="d-flex flex-column min-vh-100 bg-light">
+    <%- include('partials/navbar') %>
+
+    <main id="main-content" class="flex-grow-1">
+        <div class="container py-4 py-md-5">
+
+            <nav aria-label="breadcrumb" class="mb-4" data-aos="fade-up">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="/raccolte" class="text-decoration-none text-primary fw-semibold">
+                            <span class="material-symbols-outlined fs-6 align-middle me-1">collections_bookmark</span>
+                            Le mie Raccolte
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item active text-secondary" aria-current="page"><%= raccolta.name %></li>
+                </ol>
+            </nav>
+
+            <div class="collection-detail-header mb-5" data-aos="fade-up">
+                <div class="d-flex align-items-start justify-content-between gap-3 flex-wrap">
+                    <div>
+                        <div class="d-flex align-items-center gap-3 mb-2">
+                            <h1 class="fw-bold text-dark fs-2 m-0"><%= raccolta.name %></h1>
+                        </div>
+                        <div class="d-flex align-items-center gap-3">
+                            <span class="badge bg-primary bg-opacity-10 text-primary fw-semibold px-3 py-2">
+                                <span class="material-symbols-outlined fs-6 align-middle me-1">restaurant_menu</span>
+                                <%= raccolta.recipes.length %> <%= raccolta.recipes.length === 1 ? 'ricetta' : 'ricette' %>
+                            </span>
+                            <span class="text-secondary small">
+                                Creata il <%= new Date(raccolta.created_at).toLocaleDateString('it-IT') %>
+                            </span>
+                        </div>
+                    </div>
+                    <button id="btn-elimina-raccolta"
+                        class="btn btn-light border text-danger btn-danger-hover d-flex align-items-center gap-2 fw-semibold"
+                        data-id="<%= raccolta.id %>" data-name="<%= raccolta.name %>">
+                        <span class="material-symbols-outlined fs-5">delete</span>
+                        Elimina raccolta
+                    </button>
+                </div>
+            </div>
+
+            <% if (raccolta.recipes && raccolta.recipes.length > 0) { %>
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 pt-2">
+                    <% raccolta.recipes.forEach((recipe, idx) => { %>
+                        <div class="col" data-recipe-id="<%= recipe.id %>" data-aos="flip-left" data-aos-delay="<%= idx * 50 %>">
+                            <%- include('partials/recipe-card', { recipe, removeFromCollection: { collectionId: raccolta.id } }) %>
+                        </div>
+                    <% }) %>
+                </div>
+            <% } else { %>
+                <div class="text-center py-5 bg-white border border-dashed rounded-4" data-aos="fade-up">
+                    <span class="material-symbols-outlined text-secondary mb-3 opacity-50 collection-detail-empty-icon">restaurant_menu</span>
+                    <h2 class="h5 fw-bold text-dark mb-2">Nessuna ricetta in questa raccolta</h2>
+                    <p class="text-secondary mx-auto mb-4" style="max-width:400px">
+                        Vai su una ricetta e usa il pulsante "Aggiungi a raccolta" per iniziare a popolarlo.
+                    </p>
+                    <a href="/" class="btn btn-primary custom-btn-primary fw-bold px-4 py-2 d-inline-flex align-items-center gap-2">
+                        <span class="material-symbols-outlined fs-5">explore</span>
+                        Esplora Ricette
+                    </a>
+                </div>
+            <% } %>
+        </div>
+    </main>
+
+    <%- include('partials/footer') %>
+    <%- include('partials/scripts') %>
+    <script type="module" src="/js/collection-detail.js"></script>
+</body>
+
+</html>

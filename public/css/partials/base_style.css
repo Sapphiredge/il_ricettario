@@ -1,0 +1,55 @@
+/* Variabili globali del design system */
+:root {
+  --color-primary: #6b8f24;
+  --color-primary-hover: #5a7a1e;
+  --bg-light: #f7f8f6;
+  --surface-light: #ffffff;
+  --text-main-dark: #1b1f13;
+  --text-secondary-dark: #6b7280;
+  --border-color: #e5e7eb;
+
+  --font-family: 'Roboto', sans-serif;
+
+  --bs-primary: #6b8f24;
+  --bs-primary-rgb: 107, 143, 36;
+}
+
+/* Avatar utente navbar */
+.navbar-user-avatar {
+  border-color: var(--color-primary) !important;
+  border-width: 2px !important;
+}
+
+/* Override bottone primario Bootstrap */
+.btn-primary, .custom-btn-primary {
+  --bs-btn-bg: var(--color-primary);
+  --bs-btn-border-color: var(--color-primary);
+  --bs-btn-hover-bg: var(--color-primary-hover);
+  --bs-btn-hover-border-color: var(--color-primary-hover);
+  --bs-btn-active-bg: var(--color-primary-hover);
+  --bs-btn-active-border-color: var(--color-primary-hover);
+  --bs-btn-disabled-bg: var(--color-primary);
+  --bs-btn-disabled-border-color: var(--color-primary);
+}
+
+/* Override bottone outline Bootstrap */
+.btn-outline-primary, .custom-btn-outline {
+  --bs-btn-color: var(--color-primary);
+  --bs-btn-border-color: var(--color-primary);
+  --bs-btn-hover-bg: var(--color-primary);
+  --bs-btn-hover-border-color: var(--color-primary);
+  --bs-btn-active-bg: var(--color-primary);
+  --bs-btn-active-border-color: var(--color-primary);
+}
+
+/* Layout del main content */
+main {
+  flex: 1;
+}
+
+/* Stile del corpo pagina */
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg-light);
+  color: var(--text-main-dark);
+}
