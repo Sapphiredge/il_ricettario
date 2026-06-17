@@ -190,7 +190,7 @@ class GestioneRicettaCeM {
 // Funzione di inizializzazione per il Form Ricetta (Crea/Modifica).
 function initRecipeForm() {
     if (document.getElementById('ingredients-list')) {
-        new RicettaCreazioneModifica();
+        new GestioneRicettaCeM();
     }
 }
 
