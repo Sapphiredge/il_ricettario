@@ -15,12 +15,13 @@ router.get('/chef/dashboard', ensureAutenticato, controllerUtente.getDashboardCh
 // Route GET per la dashboard dell'admin (protetta, solo admin)
 router.get('/admin/dashboard', ensureAdmin, controllerUtente.getDashboardAdmin);
 
+// Route POST per bannare/sbannare una ricetta (protetta, solo admin)
 router.post('/ricette/:id/toggle-ban', ensureAdmin, controllerUtente.toggleBanRicetta);
 
 // Route POST per bannare/sbannare un utente (protetta, solo admin)
 router.post('/utenti/:id/toggle-ban', ensureAdmin, controllerUtente.toggleBanUtente);
 
-// ── Route Raccolte (protette, solo utenti autenticati) ──
+// ── Route Raccolte (protette, solo chef autenticati) ──
 router.get('/raccolte', ensureAutenticato, controllerRaccolte.getPaginaRaccolte);
 router.post('/raccolte/crea', ensureAutenticato, controllerRaccolte.postCreaRaccolta);
 router.get('/raccolte/:id', ensureAutenticato, controllerRaccolte.getPaginaDettaglioRaccolta);
