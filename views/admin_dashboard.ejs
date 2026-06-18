@@ -78,12 +78,6 @@
                                                             class="badge rounded-pill fw-medium py-2 px-3 recipe-status-badge <%= recipe.is_banned ? 'bg-danger bg-opacity-10 text-danger' : 'bg-success bg-opacity-10 text-success' %>">
                                                             <%= recipe.is_banned ? 'Bannata' : 'Attiva' %>
                                                         </span>
-                                                        <div id="ban-badge-<%= recipe.id %>" class="mt-1">
-                                                            <% if (recipe.is_banned) { %>
-                                                                <span
-                                                                    class="badge rounded-pill bg-danger border border-danger px-2 py-1">BANNATA</span>
-                                                                <% } %>
-                                                        </div>
                                                     </td>
                                                     <td class="py-3 px-4 text-end">
                                                         <div class="d-flex justify-content-end gap-2">
@@ -191,12 +185,6 @@
                                                             class="badge rounded-pill fw-medium py-2 px-3 user-status-badge <%= user.is_banned ? 'bg-danger bg-opacity-10 text-danger' : 'bg-success bg-opacity-10 text-success' %>">
                                                             <%= user.is_banned ? 'Bannato' : 'Attivo' %>
                                                         </span>
-                                                        <div id="ban-badge-user-<%= user.id %>" class="mt-1">
-                                                            <% if (user.is_banned) { %>
-                                                                <span
-                                                                    class="badge rounded-pill bg-danger border border-danger px-2 py-1">BANNATO</span>
-                                                                <% } %>
-                                                        </div>
                                                     </td>
                                                     <td class="py-3 px-4 text-end">
                                                         <div class="d-flex justify-content-end gap-2">

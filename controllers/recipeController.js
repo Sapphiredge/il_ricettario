@@ -119,7 +119,7 @@ exports.postRecensione = async (req, res) => {
 exports.postEliminaRicetta = async (req, res) => {
     try {
         const idRicetta = req.params.id;
-        const ricetta = await Recipe.trovaRicettaPerId(idRicetta);
+        const ricetta = await Recipe.trovaTuttiDatiRicettaPerId(idRicetta);
 
         if (!ricetta) return res.status(404).send('Ricetta non trovata');
         if (ricetta.author_id !== req.user.id) return res.status(403).send('Permesso negato.');
@@ -141,7 +141,7 @@ exports.postEliminaRicetta = async (req, res) => {
 exports.getPaginaModificaRicetta = async (req, res) => {
     try {
         const idRicetta = req.params.id;
-        const ricetta = await Recipe.trovaRicettaPerId(idRicetta);
+        const ricetta = await Recipe.trovaTuttiDatiRicettaPerId(idRicetta);
 
         if (!ricetta) return res.status(404).send('Ricetta non trovata');
         if (ricetta.author_id !== req.user.id) return res.status(403).send('Permesso negato.');
@@ -157,7 +157,7 @@ exports.getPaginaModificaRicetta = async (req, res) => {
 exports.postModificaRicetta = async (req, res) => {
     try {
         const idRicetta = req.params.id;
-        const ricetta = await Recipe.trovaRicettaPerId(idRicetta);
+        const ricetta = await Recipe.trovaTuttiDatiRicettaPerId(idRicetta);
 
         if (!ricetta) return res.status(404).send('Ricetta non trovata');
         if (ricetta.author_id !== req.user.id) return res.status(403).send('Permesso negato.');
