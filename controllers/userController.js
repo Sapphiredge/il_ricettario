@@ -18,18 +18,10 @@ exports.getDashboardAdmin = async (req, res) => {
             User.getTuttiGliUtenti()
         ]);
 
-        const mapRicette = (ricette || []).map(recipe => ({
-            ...recipe
-        }));
-
-        const mapUtenti = (utenti || []).map(u => ({
-            ...u
-        }));
-
         res.render('admin_dashboard', {
             user: req.user,
-            recipes: mapRicette,
-            users: mapUtenti
+            recipes: ricette || [],
+            users: utenti || []
         });
     } catch (err) {
         console.error('Errore durante il caricamento del dashboard dell\'admin:', err);

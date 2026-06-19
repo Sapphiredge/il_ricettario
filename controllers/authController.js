@@ -67,8 +67,7 @@ exports.postLogin = (req, res, next) => {
 // GET /registrazione — Pagina di registrazione
 exports.getRegistrazione = (req, res) => {
     if (req.isAuthenticated()) {
-        const url = '/chef/dashboard';
-        return res.redirect(url);
+        return res.redirect('/chef/dashboard');
     }
     res.render('register', { error: req.query.error });
 };
