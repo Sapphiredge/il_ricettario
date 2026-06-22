@@ -102,7 +102,7 @@ exports.postRecensione = async (req, res) => {
                 review: {
                     rating: valutazione,
                     comment: commento,
-                    author_name: req.user.full_name,
+                    author_name: req.user.username,
                     created_at: new Date().toISOString()
                 }
             });

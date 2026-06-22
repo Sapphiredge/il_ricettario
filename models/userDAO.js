@@ -79,7 +79,7 @@ class UserDAO {
         if (!raccolta) return null;
 
         const ricette = await db.query(`
-            SELECT r.*, u.full_name as author_name, u.role as author_role,
+            SELECT r.*, u.username as author_name, u.role as author_role,
                    (SELECT AVG(rating) FROM reviews WHERE recipe_id = r.id) as average_rating,
                    (SELECT COUNT(*) FROM reviews WHERE recipe_id = r.id) as review_count
             FROM recipes r

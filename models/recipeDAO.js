@@ -5,7 +5,7 @@ class RecipeDAO {
     // Trova una ricetta per id (solo non bannate), con ingredienti, istruzioni e tag
     static async trovaRicettaPerId(id) {
         const query = `
-            SELECT r.*, u.full_name as author_name, u.role as author_role,
+            SELECT r.*, u.username as author_name, u.role as author_role,
                    (SELECT AVG(rating) FROM reviews WHERE recipe_id = r.id) as average_rating,
                    (SELECT COUNT(*) FROM reviews WHERE recipe_id = r.id) as review_count
             FROM recipes r
@@ -32,7 +32,7 @@ class RecipeDAO {
     // Trova tutte le ricette per una specifica categoria
     static async getRicettePerCategoria(category) {
         const query = `
-            SELECT r.*, u.full_name as author_name, u.role as author_role,
+            SELECT r.*, u.username as author_name, u.role as author_role,
                    (SELECT AVG(rating) FROM reviews WHERE recipe_id = r.id) as average_rating,
                    (SELECT COUNT(*) FROM reviews WHERE recipe_id = r.id) as review_count
             FROM recipes r
@@ -46,7 +46,7 @@ class RecipeDAO {
     // Trova le ultime 10 ricette pubblicate nelle ultime 24 ore
     static async getRicetteRecenti24H() {
         const query = `
-            SELECT r.*, u.full_name as author_name, u.role as author_role,
+            SELECT r.*, u.username as author_name, u.role as author_role,
                    (SELECT AVG(rating) FROM reviews WHERE recipe_id = r.id) as average_rating,
                    (SELECT COUNT(*) FROM reviews WHERE recipe_id = r.id) as review_count
             FROM recipes r
@@ -61,7 +61,7 @@ class RecipeDAO {
     // Trova le ricette pubblicate ordinate per rating decrescente
     static async getRicetteTopRating() {
         const query = `
-            SELECT r.*, u.full_name as author_name, u.role as author_role,
+            SELECT r.*, u.username as author_name, u.role as author_role,
                    (SELECT AVG(rating) FROM reviews WHERE recipe_id = r.id) as average_rating,
                    (SELECT COUNT(*) FROM reviews WHERE recipe_id = r.id) as review_count
             FROM recipes r
@@ -76,7 +76,7 @@ class RecipeDAO {
     // Trova tutte le ricette per la dashboard admin
     static getTutteLeRicetteAdmin() {
         const query = `
-            SELECT r.*, u.full_name as author_name, u.role as author_role 
+            SELECT r.*, u.username as author_name, u.role as author_role 
             FROM recipes as r
             JOIN users as u ON r.author_id = u.id
             ORDER BY r.created_at DESC
@@ -206,7 +206,7 @@ class RecipeDAO {
     // Trova tutte le recensioni di una ricetta
     static getRecensioni(recipeId) {
         const query = `
-            SELECT r.*, u.full_name as author_name, u.role as author_role
+            SELECT r.*, u.username as author_name, u.role as author_role
             FROM reviews r
             JOIN users u ON r.user_id = u.id
             WHERE r.recipe_id = ?
@@ -307,7 +307,7 @@ class RecipeDAO {
         const where = conditions.join('\n            AND ');
 
         const query = `
-            SELECT DISTINCT r.*, u.full_name as author_name, u.role as author_role,
+            SELECT DISTINCT r.*, u.username as author_name, u.role as author_role,
                    (SELECT AVG(rating) FROM reviews WHERE recipe_id = r.id) as average_rating,
                    (SELECT COUNT(*) FROM reviews WHERE recipe_id = r.id) as review_count
             FROM recipes r
