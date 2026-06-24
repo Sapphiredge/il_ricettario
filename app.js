@@ -25,7 +25,9 @@ app.use(express.json());
 app.use(session({
     secret: 'chiave_complessa_segreta',
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    httpOnly: true,
+    secure: true
 }));
 
 app.use(passport.initialize());
